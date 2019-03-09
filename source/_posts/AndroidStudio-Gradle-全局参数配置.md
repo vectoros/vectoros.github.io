@@ -9,7 +9,8 @@ categories:
 * **在开发Android应用时，如何将配置参数应用到所有的AndroidStudio项目中？**
 * **有些敏感信息我们不希望包含在工程中，跟随代码提交，比如签名相关信息。**
 
-## 我们可以利用Gradle的全局配置文件，为我们所有的项目配置相关参数，解决以上两个问题。
+## 解决方案
+我们可以利用Gradle的全局配置文件，为我们所有的项目配置相关参数，解决以上两个问题。
 * Windows平台在 `C:\Users\user\.gradle` 目录下
 * Linux平台在 `/home/user/.gradle` 目录下
 * Mac平台类似，找到`gradle`的目录即可
