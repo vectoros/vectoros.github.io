@@ -1,0 +1,33 @@
+<footer class="footer footer-default">
+        <div class="container">
+          <div class="float-left" style="padding: 15px 0;">
+              <%- theme.footer %>
+          </div>
+          <div class="copyright float-right">
+            &copy;
+            <script>
+              document.write(new Date().getFullYear())
+            </script>&nbsp;<a href="https://hexo.io/zh-cn/" target="_blank">HEXO</a>&nbsp;<i class="material-icons">favorite_border</i>
+            <a href="https://github.com/invom/Material-T" target="_blank">Material-T</a>
+          </div>
+        </div>
+</footer>
+      <!--   Core JS Files   -->
+      <%- js("/js/core/jquery.min.js?v=3.2.1") %>
+      <%- js("/js/main.js") %>
+      <%- js("/js/core/popper.min.js") %>
+      <%- js("/js/core/bootstrap-material-design.min.js") %>
+      <%- js("/js/plugins/moment.min.js") %>
+      <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
+      <%- js("/js/material-kit.min.js?v=2.0.5") %>
+      <% if(is_post()){ %>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+        <%- js("/js/post.js") %>
+        <%- js('/js/plugins/prettify.js') %>
+        <script>
+            $(document).ready(function(){
+                $('pre').addClass('prettyprint linenums');
+                prettyPrint();
+            })
+        </script>
+      <% } %>
