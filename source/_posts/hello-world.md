@@ -1,5 +1,5 @@
 ---
-title: Hello World
+title: Hexo tutorial
 tag: [Hexo,Tutorial]
 categories: 
 - Web
@@ -21,6 +21,10 @@ More info: [Writing](https://hexo.io/docs/writing.html)
 ``` bash
 $ hexo server
 ```
+OR
+``` bash
+$ hexo s
+```
 
 More info: [Server](https://hexo.io/docs/server.html)
 
@@ -29,6 +33,10 @@ More info: [Server](https://hexo.io/docs/server.html)
 ``` bash
 $ hexo generate
 ```
+OR
+``` bash
+$ hexo g
+```
 
 More info: [Generating](https://hexo.io/docs/generating.html)
 
@@ -36,6 +44,59 @@ More info: [Generating](https://hexo.io/docs/generating.html)
 
 ``` bash
 $ hexo deploy
+```
+OR
+``` bash
+$ hexo d
+```
+
+### Generate Categories
+
+``` bash
+$ hexo new page categories
+```
+Then open `source/categories/index.md`, Add `type: "categories"`
+```
+---
+title: categories
+date: 2019-03-09 13:31:42
+type: "categories"
+comments: false
+---
+```
+
+### Generate Tags
+
+``` bash
+$ hexo new page tags
+```
+Then open `source/tags/index.md`, Add `type: "tags"`
+```
+---
+title: categories
+date: 2019-03-09 13:31:42
+type: "tags"
+comments: false
+---
+```
+
+### Using tags or categories
+
+Adding categories or tags description on page title
+```
+---
+title: Hexo tutorial
+tag: [Hexo,Tutorial]
+categories: 
+- Web
+---
+```
+
+### Clean caches and regenerated
+
+```
+$ hexo clean
+$ hexo g
 ```
 
 More info: [Deployment](https://hexo.io/docs/deployment.html)
