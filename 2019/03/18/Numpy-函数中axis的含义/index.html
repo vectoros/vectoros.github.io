@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no" name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content>
+    <meta name="author" content="Vectoros">
+    <meta name="keywords" content="Android, Deep Learning, Tensorflow">
+    <title>Numpy 函数中axis的含义 ~ Keep Learning</title>
+    <link rel="stylesheet" href="/css/Material_Icons.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+    
+        <link rel="stylesheet" href="/css/post.css">
+        
+            <link rel="stylesheet" href="/css/Prettify/tomorrow-night-eighties.min.css">
+        
+    
+</head>
+
+<body class=" sidebar-collapse">
+<nav class="navbar navbar-transparent navbar-color-on-scroll fixed-top navbar-expand-lg" color-on-scroll="100" id="sectionsNav">
+    <div class="container">
+        <div class="navbar-translate">
+            <a class="navbar-brand" href="/">
+                Keep Learning</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto">
+                    
+                        
+                            <li class="nav-item">
+                                <a class="nav-link" href="/archives/">
+                                    archives
+                                </a>
+                            </li>
+                        
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about/">
+                                    about
+                                </a>
+                            </li>
+                        
+                    
+                    
+                        
+                            <li class="nav-item">
+                                <a class="nav-link" rel="tooltip" title data-placement="bottom" href="https://github.com/" target="_blank" data-original-title="See me here">
+                                    <i class="fa fa-github"></i>
+                                </a>
+                            </li>
+                        
+                            <li class="nav-item">
+                                <a class="nav-link" rel="tooltip" title data-placement="bottom" href="https://twitter.com/" target="_blank" data-original-title="See me here">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+                            </li>
+                        
+                    
+                </ul>
+            </div>
+    </div>
+</nav>
+    
+  <div class="page-header header-filter" data-parallax="false" style="background-image: url('/img/post-banner.jpg'); height: 70vh;">
+    
+      <div class="container">
+        <h1 class="title text-center post_title">Numpy 函数中axis的含义</h1>
+        <p class="text-center"><b>Monday, March 18th 2019, 3:35 pm</b></p>
+      </div>
+    
+  </div>
+
+  
+  
+  
+    <div class="row" style="margin: 0 0 0; z-index: 999;">
+  <div class="col-md-8 offset-md-1">
+    <div class="main main-raised">
+      <div class="container">
+        <div class="section">
+          <div class="post_content">
+              <p>Numpy中很多的基本操作函数，都有一个参数<code>axis</code>，比如：</p>
+<ol>
+<li>argmax</li>
+<li>argmin</li>
+<li>sum</li>
+<li>max</li>
+<li>min</li>
+<li>mean</li>
+<li>average</li>
+<li>median</li>
+</ol>
+<h3 id="官方解释"><a href="#官方解释" class="headerlink" title="官方解释"></a>官方解释</h3><p>我们从<code>numpy doc</code>里面的<code>argmax</code>函数可以看到下面的解释（有删减）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">def argmax(a, axis=None, out=None):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Returns the indices of the maximum values along an axis.</span><br><span class="line"></span><br><span class="line">    Parameters</span><br><span class="line">    ----------</span><br><span class="line">    a : array_like</span><br><span class="line">        Input array. # Numpy数组</span><br><span class="line">    axis : int, optional # 整数（可正可负），可选</span><br><span class="line">        By default, the index is into the flattened array, otherwise</span><br><span class="line">        along the specified axis.</span><br><span class="line">        # 默认是一个扁平数组，否则根据指定的axis</span><br><span class="line">    Returns</span><br><span class="line">    -------</span><br><span class="line">    index_array : ndarray of ints</span><br><span class="line">        Array of indices into the array. It has the same shape as `a.shape`</span><br><span class="line">        with the dimension along `axis` removed.</span><br><span class="line">        # 返回数组的一个切片，和a的shape相同，但是移除了axis这个维度。</span><br></pre></td></tr></table></figure></p>
+<h3 id="官方-Examples"><a href="#官方-Examples" class="headerlink" title="官方 Examples"></a>官方 <code>Examples</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">Examples</span><br><span class="line">--------</span><br><span class="line">&gt;&gt;&gt; a = np.arange(6).reshape(2,3)</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">array([[0, 1, 2],</span><br><span class="line">       [3, 4, 5]])</span><br><span class="line">&gt;&gt;&gt; np.argmax(a) # 未指定axis，模式整个数组是一个扁平数组，取所有元素的最大值的下标</span><br><span class="line">5</span><br><span class="line">&gt;&gt;&gt; np.argmax(a, axis=0) # a.shape=(2,3), 当axis=0时，输出的shape是(3)</span><br><span class="line">array([1, 1, 1])</span><br><span class="line">&gt;&gt;&gt; np.argmax(a, axis=1) # 当axis=1时，输出的shape是(2)</span><br><span class="line">array([2, 2])</span><br><span class="line"></span><br><span class="line">Indexes of the maximal elements of a N-dimensional array:</span><br><span class="line"># 不展开index, 保留原始结构</span><br><span class="line">&gt;&gt;&gt; ind = np.unravel_index(np.argmax(a, axis=None), a.shape)</span><br><span class="line">&gt;&gt;&gt; ind</span><br><span class="line">(1, 2)</span><br><span class="line">&gt;&gt;&gt; a[ind]</span><br><span class="line">5</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; b = np.arange(6)</span><br><span class="line">&gt;&gt;&gt; b[1] = 5</span><br><span class="line">&gt;&gt;&gt; b</span><br><span class="line">array([0, 5, 2, 3, 4, 5])</span><br><span class="line">&gt;&gt;&gt; np.argmax(b)  # Only the first occurrence is returned. # 只输出第一个出现的最大值下标</span><br><span class="line">1</span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="怎么样更好的理解axis呢？"><a href="#怎么样更好的理解axis呢？" class="headerlink" title="怎么样更好的理解axis呢？"></a>怎么样更好的理解<code>axis</code>呢？</h3><p>未完，待续！</p>
+
+          </div>
+          <br><br>
+          <div>
+              <p>
+                       
+                      <span class="badge badge-default">#&nbsp;Python</span>
+                      &nbsp;
+                       
+                      <span class="badge badge-default">#&nbsp;Numpy</span>
+                      &nbsp;
+                      
+              </p>
+          </div>
+        </div>
+      </div>  
+    </div>
+  </div>
+  <!-- TOC -->
+  
+  <div id="toc">
+    <p class="toc-title"><i class="material-icons" style="vertical-align:middle">toc</i>Toc:</p> 
+    <div id="tocbot"></div>
+  </div>
+
+</div>
+
+
+<br>
+<!-- Comments -->
+<div class="comments" id="comments">
+
+    
+    <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script>               
+        var disqus_shortname = '';
+        var disqus_config = function () {
+            this.page.url = 'http://www.vectoros.club/2019/03/18/Numpy-函数中axis的含义/'; 
+            this.page.identifier = '/2019/03/18/Numpy-函数中axis的含义/';
+        };
+        (function() { 
+            var d = document, s = d.createElement('script');
+            s.type = 'text/javascript';
+            s.src = '//'+disqus_shortname+'.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>                                
+</div>
+
+</div>
+  
+
+<footer class="footer footer-default">
+        <div class="container">
+          <div class="float-left" style="padding: 15px 0;">
+              <b>Keep learning</b>
+          </div>
+          <div class="copyright float-right">
+            &copy;
+            <script>
+              document.write(new Date().getFullYear())
+            </script>&nbsp;<a href="https://hexo.io/zh-cn/" target="_blank">HEXO</a>&nbsp;<i class="material-icons">favorite_border</i>
+            <a href="https://github.com/invom/Material-T" target="_blank">Material-T</a>
+          </div>
+        </div>
+</footer>
+      <!--   Core JS Files   -->
+      <script src="/js/core/jquery.min.js?v=3.2.1"></script>
+      <script src="/js/main.js"></script>
+      <script src="/js/core/popper.min.js"></script>
+      <script src="/js/core/bootstrap-material-design.min.js"></script>
+      <script src="/js/plugins/moment.min.js"></script>
+      <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
+      <script src="/js/material-kit.min.js?v=2.0.5"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+        <script src="/js/post.js"></script>
+        <script src="/js/plugins/prettify.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('pre').addClass('prettyprint linenums');
+                prettyPrint();
+            })
+        </script>
+      
+</body>
+</html>
