@@ -96,25 +96,25 @@
 
 
 
-  <meta name="description" content="先提出以下两个问题 在开发Android应用时，如何将配置参数应用到所有的AndroidStudio项目中？ 有些敏感信息我们不希望包含在工程中，跟随代码提交，比如签名相关信息。  解决方案我们可以利用Gradle的全局配置文件，为我们所有的项目配置相关参数，解决以上两个问题。  Windows平台在 C:\Users\user\.gradle 目录下 Linux平台在 /home/user/.g">
-<meta name="keywords" content="AndroidStudio,Gradle,Tutorial">
+  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="keywords" content="Tutorial,Hexo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AndroidStudio Gradle 全局参数配置">
-<meta property="og:url" content="http://www.vectoros.club/2019/03/09/AndroidStudio-Gradle-全局参数配置/index.html">
+<meta property="og:title" content="Hexo tutorial">
+<meta property="og:url" content="http://www.vectoros.club/2019/03/05/Hexo-tutorial/index.html">
 <meta property="og:site_name" content="Keep Learning">
-<meta property="og:description" content="先提出以下两个问题 在开发Android应用时，如何将配置参数应用到所有的AndroidStudio项目中？ 有些敏感信息我们不希望包含在工程中，跟随代码提交，比如签名相关信息。  解决方案我们可以利用Gradle的全局配置文件，为我们所有的项目配置相关参数，解决以上两个问题。  Windows平台在 C:\Users\user\.gradle 目录下 Linux平台在 /home/user/.g">
+<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-15T07:04:47.864Z">
+<meta property="og:updated_time" content="2019-03-18T07:32:07.318Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AndroidStudio Gradle 全局参数配置">
-<meta name="twitter:description" content="先提出以下两个问题 在开发Android应用时，如何将配置参数应用到所有的AndroidStudio项目中？ 有些敏感信息我们不希望包含在工程中，跟随代码提交，比如签名相关信息。  解决方案我们可以利用Gradle的全局配置文件，为我们所有的项目配置相关参数，解决以上两个问题。  Windows平台在 C:\Users\user\.gradle 目录下 Linux平台在 /home/user/.g">
+<meta name="twitter:title" content="Hexo tutorial">
+<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
 
 
 
 
 
 
-  <link rel="canonical" href="http://www.vectoros.club/2019/03/09/AndroidStudio-Gradle-全局参数配置/">
+  <link rel="canonical" href="http://www.vectoros.club/2019/03/05/Hexo-tutorial/">
 
 
 
@@ -124,7 +124,7 @@
   };
 </script>
 
-  <title>AndroidStudio Gradle 全局参数配置 | Keep Learning</title>
+  <title>Hexo tutorial | Keep Learning</title>
   
 
 
@@ -340,7 +340,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.vectoros.club/2019/03/09/AndroidStudio-Gradle-全局参数配置/">
+    <link itemprop="mainEntityOfPage" href="http://www.vectoros.club/2019/03/05/Hexo-tutorial/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Vectoros">
@@ -357,7 +357,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">AndroidStudio Gradle 全局参数配置
+          <h1 class="post-title" itemprop="name headline">Hexo tutorial
 
               
             
@@ -383,7 +383,7 @@
                 
               
 
-              <time title="创建时间：2019-03-09 13:18:36" itemprop="dateCreated datePublished" datetime="2019-03-09T13:18:36+08:00">2019-03-09</time>
+              <time title="创建时间：2019-03-05 15:01:05" itemprop="dateCreated datePublished" datetime="2019-03-05T15:01:05+08:00">2019-03-05</time>
             
 
             
@@ -400,7 +400,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-15 15:04:47" itemprop="dateModified" datetime="2019-03-15T15:04:47+08:00">2019-03-15</time>
+                <time title="修改时间：2019-03-18 15:32:07" itemprop="dateModified" datetime="2019-03-18T15:32:07+08:00">2019-03-18</time>
               
             
           </span>
@@ -417,7 +417,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Web/" itemprop="url" rel="index"><span itemprop="name">Web</span></a></span>
 
                 
                 
@@ -452,40 +452,24 @@
       
 
       
-        <h2 id="先提出以下两个问题"><a href="#先提出以下两个问题" class="headerlink" title="先提出以下两个问题"></a>先提出以下两个问题</h2><ul>
-<li><strong>在开发Android应用时，如何将配置参数应用到所有的AndroidStudio项目中？</strong></li>
-<li><strong>有些敏感信息我们不希望包含在工程中，跟随代码提交，比如签名相关信息。</strong></li>
-</ul>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>我们可以利用Gradle的全局配置文件，为我们所有的项目配置相关参数，解决以上两个问题。</p>
-<ul>
-<li>Windows平台在 <code>C:\Users\user\.gradle</code> 目录下</li>
-<li>Linux平台在 <code>/home/user/.gradle</code> 目录下</li>
-<li>Mac平台类似，找到<code>gradle</code>的目录即可</li>
-</ul>
-<h3 id="下面以配置签名信息为例："><a href="#下面以配置签名信息为例：" class="headerlink" title="下面以配置签名信息为例："></a>下面以配置签名信息为例：</h3><ol>
-<li>打开<code>gradle.properties</code>文件，在文件末尾增加如下信息：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">KEYSTOREFILE=../../keystore/android.keystore</span><br><span class="line">KEYALIAS=release</span><br><span class="line">KEYPASSWORD=helloworld</span><br><span class="line">STOREPASSWORD=helloworld</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ul>
-<li><strong>注意</strong><ul>
-<li>这里的配置信息是没有<code>&quot;&quot;</code>双引号的，有引号会导致异常。</li>
-<li><code>KEYSOTREFILE</code>使用的是相对目录，相对于<code>app/build.gradle</code>文件所在的目录。</li>
-<li>比如我这个文件就位于和工程文件夹相同级别的目录<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">MyProject/app/build.gradle</span><br><span class="line">MyProject1/app/build.gradle</span><br><span class="line">MyProject2/app/build.gradle</span><br><span class="line">MyProject3/app/build.gradle</span><br><span class="line">keystore/android.keystore</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<ol start="2">
-<li><p>在到对应的工程下面，打开app/build.gradle</p>
-<ul>
-<li>增加signingConfigs</li>
-<li>在buildTypes release里面增加signConfig配置<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion 28</span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        applicationId &quot;com.example.test&quot;</span><br><span class="line">        minSdkVersion 21</span><br><span class="line">        targetSdkVersion 28</span><br><span class="line">        versionCode 1</span><br><span class="line">        versionName &quot;1.0&quot;</span><br><span class="line">        testInstrumentationRunner &quot;androidx.test.runner.AndroidJUnitRunner&quot;</span><br><span class="line">    &#125;</span><br><span class="line">    // 增加签名配置</span><br><span class="line">    signingConfigs&#123;</span><br><span class="line">        releaseConfig&#123;</span><br><span class="line">            keyAlias KEYALIAS //引用刚才配置的参数</span><br><span class="line">            keyPassword KEYPASSWORD</span><br><span class="line">            storePassword STOREPASSWORD</span><br><span class="line">            storeFile file(KEYSTOREFILE)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        release &#123;</span><br><span class="line">            signingConfig signingConfigs.releaseConfig //引用配置文件</span><br><span class="line">            minifyEnabled false</span><br><span class="line">            proguardFiles getDefaultProguardFile(&apos;proguard-android.txt&apos;), &apos;proguard-rules.pro&apos;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>这样配置后，即使代码提交了，也不会将签名信息提交，其他开发者把代码拉下来后，只需要到<code>gradle.properties</code>里面配置好对应的参数即可。其他全局配置也可以这么操作。</p>
-</li>
-</ol>
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>OR<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo s</span><br></pre></td></tr></table></figure></p>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>OR<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g</span><br></pre></td></tr></table></figure></p>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>OR<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo d</span><br></pre></td></tr></table></figure></p>
+<h3 id="Generate-Categories"><a href="#Generate-Categories" class="headerlink" title="Generate Categories"></a>Generate Categories</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new page categories</span><br></pre></td></tr></table></figure>
+<p>Then open <code>source/categories/index.md</code>, Add <code>type: &quot;categories&quot;</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2019-03-09 13:31:42</span><br><span class="line">type: &quot;categories&quot;</span><br><span class="line">comments: false</span><br><span class="line">---</span><br></pre></td></tr></table></figure></p>
+<h3 id="Generate-Tags"><a href="#Generate-Tags" class="headerlink" title="Generate Tags"></a>Generate Tags</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new page tags</span><br></pre></td></tr></table></figure>
+<p>Then open <code>source/tags/index.md</code>, Add <code>type: &quot;tags&quot;</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2019-03-09 13:31:42</span><br><span class="line">type: &quot;tags&quot;</span><br><span class="line">comments: false</span><br><span class="line">---</span><br></pre></td></tr></table></figure></p>
+<h3 id="Using-tags-or-categories"><a href="#Using-tags-or-categories" class="headerlink" title="Using tags or categories"></a>Using tags or categories</h3><p>Adding categories or tags description on page title<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: Hexo tutorial</span><br><span class="line">tag: [Hexo,Tutorial]</span><br><span class="line">categories: </span><br><span class="line">- Web</span><br><span class="line">---</span><br></pre></td></tr></table></figure></p>
+<h3 id="Clean-caches-and-regenerated"><a href="#Clean-caches-and-regenerated" class="headerlink" title="Clean caches and regenerated"></a>Clean caches and regenerated</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean</span><br><span class="line">$ hexo g</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 
       
     </div>
@@ -509,11 +493,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/AndroidStudio/" rel="tag"># AndroidStudio</a>
-          
-            <a href="/tags/Gradle/" rel="tag"># Gradle</a>
-          
             <a href="/tags/Tutorial/" rel="tag"># Tutorial</a>
+          
+            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
           
         </div>
       
@@ -526,18 +508,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/05/Hexo-tutorial/" rel="next" title="Hexo tutorial">
-                <i class="fa fa-chevron-left"></i> Hexo tutorial
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/03/18/Numpy-函数中axis的含义/" rel="prev" title="Numpy 函数中axis的含义">
-                Numpy 函数中axis的含义 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/03/09/AndroidStudio-Gradle-全局参数配置/" rel="prev" title="AndroidStudio Gradle 全局参数配置">
+                AndroidStudio Gradle 全局参数配置 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -727,7 +705,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#先提出以下两个问题"><span class="nav-number">1.</span> <span class="nav-text">先提出以下两个问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方案"><span class="nav-number">2.</span> <span class="nav-text">解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下面以配置签名信息为例："><span class="nav-number">2.1.</span> <span class="nav-text">下面以配置签名信息为例：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-Categories"><span class="nav-number">1.5.</span> <span class="nav-text">Generate Categories</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-Tags"><span class="nav-number">1.6.</span> <span class="nav-text">Generate Tags</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-tags-or-categories"><span class="nav-number">1.7.</span> <span class="nav-text">Using tags or categories</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Clean-caches-and-regenerated"><span class="nav-number">1.8.</span> <span class="nav-text">Clean caches and regenerated</span></a></li></ol></li></ol></div>
             
 
           </div>
