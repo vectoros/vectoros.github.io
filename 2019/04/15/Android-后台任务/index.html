@@ -96,25 +96,27 @@
 
 
 
-  <meta name="description" content="有时候我们需要在AndroidStudio中开发Android系统应用（带系统签名），为了方便开发，我们一般会生成一个debug.keystore，以下是操作步骤 找到系统源码的key1cd build/target/product/security/ 生成pem文件1openssl pkcs8 -in platform.pk8 -inform DER -outform PEM -out shar">
-<meta name="keywords" content="Android,Keystore,AndroidStudio">
+  <meta name="description" content="我们知道，在Android应用开发的过程中，不能在主线程中处理耗时任务，否则会导致UI卡顿，甚至ANR，非常影响用户体验，这就需要把这些耗时的任务，转移到后台去运行。 主线程工作 更新UI（包括测量和更新View） 协调用户交互 接收生命周期事件  以下操作需要在独立的线程里面 处理图片资源 访问磁盘，读写文件 处理网络请求 任何其他耗时达到几百毫秒的操作 当应用没有运行在前台，并且要在后台同步数">
+<meta name="keywords" content="Android,Background Tasks">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android Create Platform Keystore for AndroidStudio">
-<meta property="og:url" content="http://www.vectoros.club/2019/03/29/Android-Create-Platform-Keystore-for-AndroidStudio/index.html">
+<meta property="og:title" content="Android 后台任务">
+<meta property="og:url" content="http://www.vectoros.club/2019/04/15/Android-后台任务/index.html">
 <meta property="og:site_name" content="Keep Learning">
-<meta property="og:description" content="有时候我们需要在AndroidStudio中开发Android系统应用（带系统签名），为了方便开发，我们一般会生成一个debug.keystore，以下是操作步骤 找到系统源码的key1cd build/target/product/security/ 生成pem文件1openssl pkcs8 -in platform.pk8 -inform DER -outform PEM -out shar">
+<meta property="og:description" content="我们知道，在Android应用开发的过程中，不能在主线程中处理耗时任务，否则会导致UI卡顿，甚至ANR，非常影响用户体验，这就需要把这些耗时的任务，转移到后台去运行。 主线程工作 更新UI（包括测量和更新View） 协调用户交互 接收生命周期事件  以下操作需要在独立的线程里面 处理图片资源 访问磁盘，读写文件 处理网络请求 任何其他耗时达到几百毫秒的操作 当应用没有运行在前台，并且要在后台同步数">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-29T12:52:16.991Z">
+<meta property="og:image" content="http://www.vectoros.club/2019/04/15/Android-后台任务/img/bg-job-choose.svg">
+<meta property="og:updated_time" content="2019-04-15T08:25:38.425Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android Create Platform Keystore for AndroidStudio">
-<meta name="twitter:description" content="有时候我们需要在AndroidStudio中开发Android系统应用（带系统签名），为了方便开发，我们一般会生成一个debug.keystore，以下是操作步骤 找到系统源码的key1cd build/target/product/security/ 生成pem文件1openssl pkcs8 -in platform.pk8 -inform DER -outform PEM -out shar">
+<meta name="twitter:title" content="Android 后台任务">
+<meta name="twitter:description" content="我们知道，在Android应用开发的过程中，不能在主线程中处理耗时任务，否则会导致UI卡顿，甚至ANR，非常影响用户体验，这就需要把这些耗时的任务，转移到后台去运行。 主线程工作 更新UI（包括测量和更新View） 协调用户交互 接收生命周期事件  以下操作需要在独立的线程里面 处理图片资源 访问磁盘，读写文件 处理网络请求 任何其他耗时达到几百毫秒的操作 当应用没有运行在前台，并且要在后台同步数">
+<meta name="twitter:image" content="http://www.vectoros.club/2019/04/15/Android-后台任务/img/bg-job-choose.svg">
 
 
 
 
 
 
-  <link rel="canonical" href="http://www.vectoros.club/2019/03/29/Android-Create-Platform-Keystore-for-AndroidStudio/">
+  <link rel="canonical" href="http://www.vectoros.club/2019/04/15/Android-后台任务/">
 
 
 
@@ -124,7 +126,7 @@
   };
 </script>
 
-  <title>Android Create Platform Keystore for AndroidStudio | Keep Learning</title>
+  <title>Android 后台任务 | Keep Learning</title>
   
 
 
@@ -340,7 +342,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.vectoros.club/2019/03/29/Android-Create-Platform-Keystore-for-AndroidStudio/">
+    <link itemprop="mainEntityOfPage" href="http://www.vectoros.club/2019/04/15/Android-后台任务/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Vectoros">
@@ -357,7 +359,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Android Create Platform Keystore for AndroidStudio
+          <h1 class="post-title" itemprop="name headline">Android 后台任务
 
               
             
@@ -383,7 +385,7 @@
                 
               
 
-              <time title="创建时间：2019-03-29 20:37:26 / 修改时间：20:52:16" itemprop="dateCreated datePublished" datetime="2019-03-29T20:37:26+08:00">2019-03-29</time>
+              <time title="创建时间：2019-04-15 15:14:26 / 修改时间：16:25:38" itemprop="dateCreated datePublished" datetime="2019-04-15T15:14:26+08:00">2019-04-15</time>
             
 
             
@@ -405,7 +407,14 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Andorid/" itemprop="url" rel="index"><span itemprop="name">Andorid</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/Develop/" itemprop="url" rel="index"><span itemprop="name">Develop</span></a></span>
 
                 
                 
@@ -440,17 +449,57 @@
       
 
       
-        <p>有时候我们需要在AndroidStudio中开发Android系统应用（带系统签名），为了方便开发，我们一般会生成一个debug.keystore，以下是操作步骤</p>
-<h3 id="找到系统源码的key"><a href="#找到系统源码的key" class="headerlink" title="找到系统源码的key"></a>找到系统源码的key</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd build/target/product/security/</span><br></pre></td></tr></table></figure>
-<h3 id="生成pem文件"><a href="#生成pem文件" class="headerlink" title="生成pem文件"></a>生成pem文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl pkcs8 -in platform.pk8 -inform DER -outform PEM -out shared.priv.pem -nocrypt</span><br></pre></td></tr></table></figure>
-<h3 id="生成pk12文件"><a href="#生成pk12文件" class="headerlink" title="生成pk12文件"></a>生成pk12文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl pkcs12 -export -in platform.x509.pem -inkey shared.priv.pem -out shared.pk12 -name youralias</span><br></pre></td></tr></table></figure>
-<h3 id="设置密码"><a href="#设置密码" class="headerlink" title="设置密码"></a>设置密码</h3><ul>
-<li>默认密码是android</li>
-<li>可以自己修改</li>
+        <p>我们知道，在Android应用开发的过程中，不能在主线程中处理耗时任务，否则会导致UI卡顿，甚至ANR，非常影响用户体验，这就需要把这些耗时的任务，转移到后台去运行。</p>
+<h2 id="主线程工作"><a href="#主线程工作" class="headerlink" title="主线程工作"></a>主线程工作</h2><ol>
+<li>更新UI（包括测量和更新View）</li>
+<li>协调用户交互</li>
+<li>接收生命周期事件</li>
+</ol>
+<h2 id="以下操作需要在独立的线程里面"><a href="#以下操作需要在独立的线程里面" class="headerlink" title="以下操作需要在独立的线程里面"></a>以下操作需要在独立的线程里面</h2><ol>
+<li>处理图片资源</li>
+<li>访问磁盘，读写文件</li>
+<li>处理网络请求</li>
+<li>任何其他耗时达到几百毫秒的操作</li>
+<li>当应用没有运行在前台，并且要在后台同步数据的时候</li>
+</ol>
+<h2 id="后台应用挑战"><a href="#后台应用挑战" class="headerlink" title="后台应用挑战"></a>后台应用挑战</h2><ol>
+<li>后台应用会消耗设备的有限的资源，比如RAM和电池，这个可能会给用户带来不好的体验</li>
+<li>为了最大化电池的使用，Android系统会强制限制后台应用程序<ul>
+<li>Android 6.0，引入了Doze 和 App standby</li>
+<li>Android 7.0，限制隐式广播和引入Doze-on-the-Go</li>
+<li>Android 8.0, 限制后台行为，比如定位和Wekelocks</li>
+<li>Android 9.0, 引入App Standby Buckets</li>
 </ul>
-<h3 id="生成keystore"><a href="#生成keystore" class="headerlink" title="生成keystore"></a>生成keystore</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keytool -importkeystore -deststorepass android -destkeypass android -destkeystore debug.keystore -srckeystore shared.pk12 -srcstoretype PKCS12 -srcstorepass android -alias youralias</span><br></pre></td></tr></table></figure>
-<h3 id="总共会生成以下三个文件，其中debug-keystore就是我们需要的"><a href="#总共会生成以下三个文件，其中debug-keystore就是我们需要的" class="headerlink" title="总共会生成以下三个文件，其中debug.keystore就是我们需要的"></a>总共会生成以下三个文件，其中debug.keystore就是我们需要的</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">shared.pk12</span><br><span class="line">shared.priv.pem</span><br><span class="line">debug.keystore</span><br></pre></td></tr></table></figure>
-<h3 id="部署到AndroidStudio"><a href="#部署到AndroidStudio" class="headerlink" title="部署到AndroidStudio"></a>部署到AndroidStudio</h3><p>可以参考之前的文章<a href="/2019/03/09/AndroidStudio-Gradle-全局参数配置/" title="AndroidStudio Gradle 全局参数配置">AndroidStudio Gradle 全局参数配置</a></p>
+</li>
+</ol>
+<h2 id="如何选择合适的方案"><a href="#如何选择合适的方案" class="headerlink" title="如何选择合适的方案"></a>如何选择合适的方案</h2><ol>
+<li>任务是否可以延迟，还是需要立刻执行？</li>
+<li>独立工作还是依赖系统环境？</li>
+<li>是否需要精确定时运行？</li>
+</ol>
+<h2 id="Google推荐的方案"><a href="#Google推荐的方案" class="headerlink" title="Google推荐的方案"></a>Google推荐的方案</h2><ul>
+<li>WorkManager<ul>
+<li>Android Libraries (API Level 14+)</li>
+</ul>
+</li>
+<li>Forground Service<ul>
+<li>告知用户正在处理的重要内容</li>
+<li>前台服务是可见的</li>
+</ul>
+</li>
+<li>AlarmManager<ul>
+<li>定时任务</li>
+</ul>
+</li>
+<li>DownloadManager<ul>
+<li>HTTP长连接</li>
+</ul>
+</li>
+</ul>
+<h2 id="具体可以参考下面的流程"><a href="#具体可以参考下面的流程" class="headerlink" title="具体可以参考下面的流程"></a>具体可以参考下面的流程</h2><p><img src="img/bg-job-choose.svg"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://developer.android.com/guide/background/" target="_blank" rel="noopener">https://developer.android.com/guide/background/</a></li>
+</ul>
 
       
     </div>
@@ -476,9 +525,7 @@
           
             <a href="/tags/Android/" rel="tag"># Android</a>
           
-            <a href="/tags/Keystore/" rel="tag"># Keystore</a>
-          
-            <a href="/tags/AndroidStudio/" rel="tag"># AndroidStudio</a>
+            <a href="/tags/Background-Tasks/" rel="tag"># Background Tasks</a>
           
         </div>
       
@@ -491,8 +538,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/24/Android-Segmentation-Demo-Based-on-TFLite/" rel="next" title="Android Segmentation Demo Based on TFLite">
-                <i class="fa fa-chevron-left"></i> Android Segmentation Demo Based on TFLite
+              <a href="/2019/04/15/Android-后台任务之-IntentService/" rel="next" title="Android 后台任务之 IntentService">
+                <i class="fa fa-chevron-left"></i> Android 后台任务之 IntentService
               </a>
             
           </div>
@@ -500,10 +547,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/15/Android-后台任务之-IntentService/" rel="prev" title="Android 后台任务之 IntentService">
-                Android 后台任务之 IntentService <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -698,7 +741,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#找到系统源码的key"><span class="nav-number">1.</span> <span class="nav-text">找到系统源码的key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成pem文件"><span class="nav-number">2.</span> <span class="nav-text">生成pem文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成pk12文件"><span class="nav-number">3.</span> <span class="nav-text">生成pk12文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置密码"><span class="nav-number">4.</span> <span class="nav-text">设置密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成keystore"><span class="nav-number">5.</span> <span class="nav-text">生成keystore</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总共会生成以下三个文件，其中debug-keystore就是我们需要的"><span class="nav-number">6.</span> <span class="nav-text">总共会生成以下三个文件，其中debug.keystore就是我们需要的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署到AndroidStudio"><span class="nav-number">7.</span> <span class="nav-text">部署到AndroidStudio</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#主线程工作"><span class="nav-number">1.</span> <span class="nav-text">主线程工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#以下操作需要在独立的线程里面"><span class="nav-number">2.</span> <span class="nav-text">以下操作需要在独立的线程里面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后台应用挑战"><span class="nav-number">3.</span> <span class="nav-text">后台应用挑战</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何选择合适的方案"><span class="nav-number">4.</span> <span class="nav-text">如何选择合适的方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Google推荐的方案"><span class="nav-number">5.</span> <span class="nav-text">Google推荐的方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体可以参考下面的流程"><span class="nav-number">6.</span> <span class="nav-text">具体可以参考下面的流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
