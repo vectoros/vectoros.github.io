@@ -28,6 +28,7 @@ python convert.py yolov3.cfg yolov3.weights 320 model_data/yolov3.h5
 ```
 
 2. 读取转换后模型的参数
+
 ```python
 def get_output_names(keras_model):
     outputs = keras_model.outputs
@@ -46,6 +47,7 @@ def get_input_names(keras_model):
 ``` 
 
 3. 使用官方提供的`lite.TFLiteConverter.from_keras_model_file`转换模型
+
 ```python
 def keras_to_tflite(input_keras_model_file, output_tflite_file):
     keras_model = load_model(input_keras_model_file)
@@ -63,6 +65,7 @@ def keras_to_tflite(input_keras_model_file, output_tflite_file):
 ```
 
 4. 获取转换后的模型
+
 ```python
 def main():
     keras_model_file = "./model_data/yolov3.h5"
