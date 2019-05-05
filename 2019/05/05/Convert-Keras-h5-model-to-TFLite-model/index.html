@@ -96,15 +96,18 @@
 
 
 
-  <meta name="keywords" content="Android, Deep Learning, Tensorflow">
+  <meta name="description" content="目前在移动端（Android）使用比较广泛的深度模型框架是TFLite，这个也是Google大力推广的。但是目前很多高效的网络都没有官方的TensorFlow版本，所以在使用的时候，我们需要将其他格式的模型，转换成TFLite格式。好在Google提供了非常全的转换工具，在最新版本中，Keras已经成为了官方推荐的前端。 模型转换前的准备 确定源模型的格式 确定源模型的输入名称，输入尺寸 确定源模">
+<meta name="keywords" content="Keras,TFLite">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Convert Keras h5 model to TFLite model">
 <meta property="og:url" content="http://www.vectoros.club/2019/05/05/Convert-Keras-h5-model-to-TFLite-model/index.html">
 <meta property="og:site_name" content="Keep Learning">
+<meta property="og:description" content="目前在移动端（Android）使用比较广泛的深度模型框架是TFLite，这个也是Google大力推广的。但是目前很多高效的网络都没有官方的TensorFlow版本，所以在使用的时候，我们需要将其他格式的模型，转换成TFLite格式。好在Google提供了非常全的转换工具，在最新版本中，Keras已经成为了官方推荐的前端。 模型转换前的准备 确定源模型的格式 确定源模型的输入名称，输入尺寸 确定源模">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-05T13:15:09.179Z">
+<meta property="og:updated_time" content="2019-05-05T13:31:07.041Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Convert Keras h5 model to TFLite model">
+<meta name="twitter:description" content="目前在移动端（Android）使用比较广泛的深度模型框架是TFLite，这个也是Google大力推广的。但是目前很多高效的网络都没有官方的TensorFlow版本，所以在使用的时候，我们需要将其他格式的模型，转换成TFLite格式。好在Google提供了非常全的转换工具，在最新版本中，Keras已经成为了官方推荐的前端。 模型转换前的准备 确定源模型的格式 确定源模型的输入名称，输入尺寸 确定源模">
 
 
 
@@ -380,12 +383,48 @@
                 
               
 
-              <time title="创建时间：2019-05-05 21:15:09" itemprop="dateCreated datePublished" datetime="2019-05-05T21:15:09+08:00">2019-05-05</time>
+              <time title="创建时间：2019-05-05 21:15:09 / 修改时间：21:31:07" itemprop="dateCreated datePublished" datetime="2019-05-05T21:15:09+08:00">2019-05-05</time>
             
 
+            
+              
+
+              
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/TensorFlow/" itemprop="url" rel="index"><span itemprop="name">TensorFlow</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/TensorFlow/Keras/" itemprop="url" rel="index"><span itemprop="name">Keras</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/TensorFlow/Keras/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -415,7 +454,27 @@
       
 
       
-        
+        <p>目前在移动端（Android）使用比较广泛的深度模型框架是TFLite，这个也是Google大力推广的。但是目前很多高效的网络都没有官方的TensorFlow版本，所以在使用的时候，我们需要将其他格式的模型，转换成TFLite格式。<br>好在Google提供了非常全的转换工具，在最新版本中，Keras已经成为了官方推荐的前端。</p>
+<h2 id="模型转换前的准备"><a href="#模型转换前的准备" class="headerlink" title="模型转换前的准备"></a>模型转换前的准备</h2><ul>
+<li>确定源模型的格式</li>
+<li>确定源模型的输入名称，输入尺寸</li>
+<li>确定源模型的输出名称，输出尺寸</li>
+</ul>
+<h2 id="下面以Yolov3的cfg和weights文件转换成TFLite为例"><a href="#下面以Yolov3的cfg和weights文件转换成TFLite为例" class="headerlink" title="下面以Yolov3的cfg和weights文件转换成TFLite为例"></a>下面以Yolov3的cfg和weights文件转换成TFLite为例</h2><p>Yolo的Backbone是Darknet，首先需要转换成支持的keras模型</p>
+<ol>
+<li>转换成Keras h5 格式<br>使用修改后的工具<a href="https://github.com/vectoros/keras-yolo3" target="_blank" rel="noopener">keras_yolov3</a>, 用里面的convert.py文件，将模型转成keras的h5格式</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://pjreddie.com/media/files/yolov3.weights</span><br><span class="line">python convert.py yolov3.cfg yolov3.weights <span class="number">320</span> model_data/yolov3.h5</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><p>读取转换后模型的参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_output_names</span><span class="params">(keras_model)</span>:</span></span><br><span class="line">    outputs = keras_model.outputs</span><br><span class="line">    output_names = []</span><br><span class="line">    <span class="keyword">for</span> _output <span class="keyword">in</span> outputs:</span><br><span class="line">        output_names.append(_output.name[:<span class="number">-2</span>])</span><br><span class="line">    <span class="keyword">return</span> output_names</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_input_names</span><span class="params">(keras_model)</span>:</span></span><br><span class="line">    inputs = keras_model.inputs</span><br><span class="line">    input_names = []</span><br><span class="line">    <span class="keyword">for</span> _input <span class="keyword">in</span> inputs:</span><br><span class="line">        input_names.append(_input.name[:<span class="number">-2</span>])</span><br><span class="line">    <span class="keyword">return</span> input_names</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line"><span class="number">3.</span> 使用官方提供的`lite.TFLiteConverter.from_keras_model_file`转换模型</span><br><span class="line">```python</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">keras_to_tflite</span><span class="params">(input_keras_model_file, output_tflite_file)</span>:</span></span><br><span class="line">    keras_model = load_model(input_keras_model_file)</span><br><span class="line">    input_names = get_input_names(keras_model)</span><br><span class="line">    output_names = get_output_names(keras_model)</span><br><span class="line">    print(<span class="string">"input names:"</span>, input_names, <span class="string">" shapes:"</span>, keras_model.input_shape)</span><br><span class="line">    print(<span class="string">"output names:"</span>, output_names, <span class="string">" shapes:"</span>, keras_model.output_shape)</span><br><span class="line">    converter = lite.TFLiteConverter.from_keras_model_file(model_file=input_keras_model_file,</span><br><span class="line">                                                           input_arrays=input_names,</span><br><span class="line">                                                           output_arrays=output_names)</span><br><span class="line">    model = converter.convert()</span><br><span class="line">    file = open(output_tflite_file, <span class="string">"wb"</span>)</span><br><span class="line">    file.write(model)</span><br><span class="line">    print(<span class="string">"save tflite file to: "</span>, output_tflite_file)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取转换后的模型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    keras_model_file = <span class="string">"./model_data/yolov3.h5"</span></span><br><span class="line">    tflite_model_file = <span class="string">"./model_data/yolov3.tflite"</span></span><br><span class="line">    keras_to_tflite(keras_model_file, tflite_model_file)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="预告"><a href="#预告" class="headerlink" title="预告"></a>预告</h2><p>如何在PC端验证测试转换后的TFLite模型</p>
+
       
     </div>
 
@@ -435,6 +494,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Keras/" rel="tag"># Keras</a>
+          
+            <a href="/tags/TFLite/" rel="tag"># TFLite</a>
+          
+        </div>
       
 
       
@@ -497,8 +564,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -550,7 +626,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -644,6 +726,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#模型转换前的准备"><span class="nav-number">1.</span> <span class="nav-text">模型转换前的准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下面以Yolov3的cfg和weights文件转换成TFLite为例"><span class="nav-number">2.</span> <span class="nav-text">下面以Yolov3的cfg和weights文件转换成TFLite为例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预告"><span class="nav-number">3.</span> <span class="nav-text">预告</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
