@@ -20,6 +20,7 @@ categories:
 Yolo的Backbone是Darknet，首先需要转换成支持的keras模型
 
 1. 转换成Keras h5 格式
+
 使用修改后的工具[keras_yolov3](https://github.com/vectoros/keras-yolo3), 用里面的convert.py文件，将模型转成keras的h5格式
 
 ```python
@@ -28,6 +29,8 @@ python convert.py yolov3.cfg yolov3.weights 320 model_data/yolov3.h5
 ```
 
 2. 读取转换后模型的参数
+
+转换模型函数需要提供输出和输出
 
 ```python
 def get_output_names(keras_model):
@@ -44,9 +47,12 @@ def get_input_names(keras_model):
     for _input in inputs:
         input_names.append(_input.name[:-2])
     return input_names
-``` 
+```
+
 
 3. 使用官方提供的`lite.TFLiteConverter.from_keras_model_file`转换模型
+
+调用官方提供的方法转换模型
 
 ```python
 def keras_to_tflite(input_keras_model_file, output_tflite_file):
