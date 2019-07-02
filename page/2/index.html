@@ -99,7 +99,7 @@
   <meta name="keywords" content="Android, Deep Learning, Tensorflow">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Keep Learning">
-<meta property="og:url" content="http://www.vectoros.club/categories/Object-Dection/TensorFlow/index.html">
+<meta property="og:url" content="http://www.vectoros.club/page/2/index.html">
 <meta property="og:site_name" content="Keep Learning">
 <meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
@@ -110,7 +110,7 @@
 
 
 
-  <link rel="canonical" href="http://www.vectoros.club/categories/Object-Dection/TensorFlow/">
+  <link rel="canonical" href="http://www.vectoros.club/page/2/">
 
 
 
@@ -120,7 +120,7 @@
   };
 </script>
 
-  <title>分类: TensorFlow | Keep Learning</title>
+  <title>Keep Learning</title>
   
 
 
@@ -168,7 +168,8 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left 
+  page-home">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -240,7 +241,7 @@
         
         
           
-          <li class="menu-item menu-item-categories menu-item-active">
+          <li class="menu-item menu-item-categories">
 
     
     
@@ -296,28 +297,6 @@
   
     
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
   
 
   
@@ -341,53 +320,208 @@
           
           <div id="content" class="content">
             
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
 
   
   
   
-  <div class="post-block category">
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>TensorFlow<small>分类</small>
-        </h1>
-      </div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.vectoros.club/2019/03/09/AndroidStudio-Gradle-全局参数配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vectoros">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.webp">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Learning">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/09/AndroidStudio-Gradle-全局参数配置/" class="post-title-link" itemprop="url">AndroidStudio Gradle 全局参数配置</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-09 13:18:36 / 修改时间：22:46:25" itemprop="dateCreated datePublished" datetime="2019-03-09T13:18:36+08:00">2019-03-09</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
 
       
         
+          
+            <h2 id="先提出以下两个问题"><a href="#先提出以下两个问题" class="headerlink" title="先提出以下两个问题"></a>先提出以下两个问题</h2><ul>
+<li><strong>在开发Android应用时，如何将配置参数应用到所有的AndroidStudio项目中？</strong></li>
+<li><strong>有些敏感信息我们不希望包含在工程中，跟随代码提交，比如签名相关信息。</strong></li>
+</ul>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>我们可以利用Gradle的全局配置文件，为我们所有的项目配置相关参数，解决以上两个问题。</p>
+<ul>
+<li>Windows平台在 <code>C:\Users\user\.gradle</code> 目录下</li>
+<li>Linux平台在 <code>/home/user/.gradle</code> 目录下</li>
+<li>Mac平台类似，找到<code>gradle</code>的目录即可</li>
+</ul>
+<h3 id="下面以配置签名信息为例："><a href="#下面以配置签名信息为例：" class="headerlink" title="下面以配置签名信息为例："></a>下面以配置签名信息为例：</h3><ol>
+<li>打开<code>gradle.properties</code>文件，在文件末尾增加如下信息：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">KEYSTOREFILE=../../keystore/android.keystore</span><br><span class="line">KEYALIAS=release</span><br><span class="line">KEYPASSWORD=helloworld</span><br><span class="line">STOREPASSWORD=helloworld</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li><strong>注意</strong><ul>
+<li>这里的配置信息是没有<code>&quot;&quot;</code>双引号的，有引号会导致异常。</li>
+<li><code>KEYSOTREFILE</code>使用的是相对目录，相对于<code>app/build.gradle</code>文件所在的目录。</li>
+<li>比如我这个文件就位于和工程文件夹相同级别的目录<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">MyProject/app/build.gradle</span><br><span class="line">MyProject1/app/build.gradle</span><br><span class="line">MyProject2/app/build.gradle</span><br><span class="line">MyProject3/app/build.gradle</span><br><span class="line">keystore/android.keystore</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li><p>在到对应的工程下面，打开app/build.gradle</p>
+<ul>
+<li>增加signingConfigs</li>
+<li>在buildTypes release里面增加signConfig配置<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion 28</span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        applicationId &quot;com.example.test&quot;</span><br><span class="line">        minSdkVersion 21</span><br><span class="line">        targetSdkVersion 28</span><br><span class="line">        versionCode 1</span><br><span class="line">        versionName &quot;1.0&quot;</span><br><span class="line">        testInstrumentationRunner &quot;androidx.test.runner.AndroidJUnitRunner&quot;</span><br><span class="line">    &#125;</span><br><span class="line">    // 增加签名配置</span><br><span class="line">    signingConfigs&#123;</span><br><span class="line">        releaseConfig&#123;</span><br><span class="line">            keyAlias KEYALIAS //引用刚才配置的参数</span><br><span class="line">            keyPassword KEYPASSWORD</span><br><span class="line">            storePassword STOREPASSWORD</span><br><span class="line">            storeFile file(KEYSTOREFILE)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        release &#123;</span><br><span class="line">            signingConfig signingConfigs.releaseConfig //引用配置文件</span><br><span class="line">            minifyEnabled false</span><br><span class="line">            proguardFiles getDefaultProguardFile(&apos;proguard-android.txt&apos;), &apos;proguard-rules.pro&apos;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>这样配置后，即使代码提交了，也不会将签名信息提交，其他开发者把代码拉下来后，只需要到<code>gradle.properties</code>里面配置好对应的参数即可。其他全局配置也可以这么操作。</p>
+</li>
+</ol>
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
+          
         
-          <a class="post-title-link" href="/2019/05/05/Convert-Yolov3-cfg-and-weights-files-to-keras-h5-model/" itemprop="url">
-            
-              <span itemprop="name">Convert Yolov3 cfg and weights files to keras h5 model</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-05T20:53:38+08:00" content="2019-05-05">
-          05-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
   </div>
   
   
   
+  </article>
+
+
+    
+  </section>
 
   
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
 
 
 
