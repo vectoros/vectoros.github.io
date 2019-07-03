@@ -382,12 +382,24 @@
                 
               
 
-              <time title="创建时间：2019-07-02 21:47:09 / 修改时间：22:01:23" itemprop="dateCreated datePublished" datetime="2019-07-02T21:47:09+08:00">2019-07-02</time>
+              <time title="创建时间：2019-07-02 21:47:09" itemprop="dateCreated datePublished" datetime="2019-07-02T21:47:09+08:00">2019-07-02</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-07-03 09:47:06" itemprop="dateModified" datetime="2019-07-03T09:47:06+08:00">2019-07-03</time>
               
             
           </span>
@@ -450,10 +462,49 @@
 <li>Opencv 3.4/4.0</li>
 </ul>
 <h2 id="准备知识-CMake"><a href="#准备知识-CMake" class="headerlink" title="准备知识-CMake"></a>准备知识-CMake</h2><p>AndroidStudio 支持cmake编译C/C++文件，通过编写CMakeList.txt来实现</p>
-<h3 id="常用变量"><a href="#常用变量" class="headerlink" title="常用变量"></a>常用变量</h3><h3 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h3><h3 id="编译器设置"><a href="#编译器设置" class="headerlink" title="编译器设置"></a>编译器设置</h3><h3 id="输出设置"><a href="#输出设置" class="headerlink" title="输出设置"></a>输出设置</h3><ul>
-<li>.so</li>
-<li>.a</li>
-<li>Executable</li>
+<h3 id="常用变量"><a href="#常用变量" class="headerlink" title="常用变量"></a>常用变量</h3><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$&#123;CMAKE_SOURCE_DIR&#125; <span class="comment"># CMakeLists.txt文件所在位置</span></span><br><span class="line">$&#123;ANDROID_ABI&#125; <span class="comment"># Android ABI架构 ("armeabi-v7a","arm64-v8a")</span></span><br></pre></td></tr></table></figure>
+<h3 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h3><ul>
+<li><p>设置变量值</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set(VARIABLE, VALUE)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加共享库</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">add_library( </span><br><span class="line"><span class="comment"># Sets the name of the library.</span></span><br><span class="line">native-lib</span><br><span class="line"><span class="comment"># Sets the library as a shared library.</span></span><br><span class="line">SHARED</span><br><span class="line"><span class="comment"># Provides a relative path to your source file(s).</span></span><br><span class="line">src/main/cpp/native-lib.cpp)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加可执行文件</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">add_executable( </span><br><span class="line"><span class="comment"># Sets the name of the executable file.</span></span><br><span class="line">test</span><br><span class="line"><span class="comment"># Provides a relative path to your source file(s).</span></span><br><span class="line">src/main/cpp/main.cpp)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查找NDK library</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Searches for a specified prebuilt library and stores the path as a</span></span><br><span class="line"><span class="comment"># variable. Because CMake includes system libraries in the search path by</span></span><br><span class="line"><span class="comment"># default, you only need to specify the name of the public NDK library</span></span><br><span class="line"><span class="comment"># you want to add. CMake verifies that the library exists before</span></span><br><span class="line"><span class="comment"># completing its build.</span></span><br><span class="line"></span><br><span class="line">find_library( <span class="comment"># Sets the name of the path variable.</span></span><br><span class="line">        log-lib</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Specifies the name of the NDK library that</span></span><br><span class="line">        <span class="comment"># you want CMake to locate.</span></span><br><span class="line">        log)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>指定链接库</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Specifies libraries CMake should link to your target library. You</span></span><br><span class="line"><span class="comment"># can link multiple libraries, such as libraries you define in this</span></span><br><span class="line"><span class="comment"># build script, prebuilt third-party libraries, or system libraries.</span></span><br><span class="line"></span><br><span class="line">target_link_libraries( <span class="comment"># Specifies the target library.</span></span><br><span class="line">        test</span><br><span class="line">        <span class="comment"># Links the target library to the log library</span></span><br><span class="line">        <span class="comment"># included in the NDK.</span></span><br><span class="line">        $&#123;log-lib&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>指定包含头文件</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/<span class="keyword">include</span>/)</span><br><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/opencv)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>手动指定共享库</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">add_library(libopencv_java3 SHARED IMPORTED)</span><br><span class="line">set_target_properties(libopencv_java3 PROPERTIES IMPORTED_LOCATION</span><br><span class="line">        $&#123;CMAKE_SOURCE_DIR&#125;/src/main/jniLibs/$&#123;ANDROID_ABI&#125;/libopencv_java3.so)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="编译器设置"><a href="#编译器设置" class="headerlink" title="编译器设置"></a>编译器设置</h3><p>我们可以在CMakeLists.txt里面设置编译器参数，也可以在build.gradle脚本里面设置</p>
+<ul>
+<li><p>CMakeLists.txt 设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>build.gradle 脚本设置</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: <span class="string">'com.android.application'</span></span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        externalNativeBuild &#123;</span><br><span class="line">            cmake &#123;</span><br><span class="line">                <span class="comment">//设置cpp Flags</span></span><br><span class="line">                cppFlags <span class="string">"-std=c++11 -frtti -fexceptions"</span></span><br><span class="line">                <span class="comment">//设置STL共享库，这里要注意，部分Android系统里面可能没有libc++_shared.so，这个时候需要在app里面打包进去</span></span><br><span class="line">                <span class="comment">//文件路径在NDK安装目录下 sources/cxx-stl/llvm-libc++/libs/$&#123;ANDROID_ABI&#125;/libc++_shared.so</span></span><br><span class="line">                arguments <span class="string">"-DANDROID_STL=c++_shared"</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="输出设置"><a href="#输出设置" class="headerlink" title="输出设置"></a>输出设置</h3><ul>
+<li><p>动态共享库 <code>.so</code></p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/opencv)</span><br><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/<span class="keyword">include</span>/)</span><br><span class="line">add_library(libopencv_java3 SHARED IMPORTED)</span><br><span class="line">set_target_properties(libopencv_java3 PROPERTIES IMPORTED_LOCATION</span><br><span class="line">        $&#123;CMAKE_SOURCE_DIR&#125;/src/main/jniLibs/$&#123;ANDROID_ABI&#125;/libopencv_java3.so)</span><br><span class="line">find_library( <span class="comment"># Sets the name of the path variable.</span></span><br><span class="line">        log-lib</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Specifies the name of the NDK library that</span></span><br><span class="line">        <span class="comment"># you want CMake to locate.</span></span><br><span class="line">        log)</span><br><span class="line">add_library( <span class="comment"># Sets the name of the library.</span></span><br><span class="line">        native-lib</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Sets the library as a shared library.</span></span><br><span class="line">        SHARED</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Provides a relative path to your source file(s).</span></span><br><span class="line"></span><br><span class="line">        src/main/cpp/native-lib.cpp)</span><br><span class="line">target_link_libraries( <span class="comment"># Specifies the target library.</span></span><br><span class="line">        native-lib</span><br><span class="line">        libopencv_java3</span><br><span class="line">        <span class="comment"># Links the target library to the log library</span></span><br><span class="line">        <span class="comment"># included in the NDK.</span></span><br><span class="line">        $&#123;log-lib&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>静态共享库 <code>.a</code></p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/opencv)</span><br><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/<span class="keyword">include</span>/)</span><br><span class="line">add_library(libopencv_java3 SHARED IMPORTED)</span><br><span class="line">set_target_properties(libopencv_java3 PROPERTIES IMPORTED_LOCATION</span><br><span class="line">        $&#123;CMAKE_SOURCE_DIR&#125;/src/main/jniLibs/$&#123;ANDROID_ABI&#125;/libopencv_java3.so)</span><br><span class="line">find_library( <span class="comment"># Sets the name of the path variable.</span></span><br><span class="line">        log-lib</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Specifies the name of the NDK library that</span></span><br><span class="line">        <span class="comment"># you want CMake to locate.</span></span><br><span class="line">        log)</span><br><span class="line">add_library( <span class="comment"># Sets the name of the library.</span></span><br><span class="line">        native-lib</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Sets the library as a static library.</span></span><br><span class="line">        STATIC</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Provides a relative path to your source file(s).</span></span><br><span class="line"></span><br><span class="line">        src/main/cpp/native-lib.cpp)</span><br><span class="line">target_link_libraries( <span class="comment"># Specifies the target library.</span></span><br><span class="line">        native-lib</span><br><span class="line">        libopencv_java3</span><br><span class="line">        <span class="comment"># Links the target library to the log library</span></span><br><span class="line">        <span class="comment"># included in the NDK.</span></span><br><span class="line">        $&#123;log-lib&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Executable</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/opencv)</span><br><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/<span class="keyword">include</span>/)</span><br><span class="line">add_library(libopencv_java3 SHARED IMPORTED)</span><br><span class="line">set_target_properties(libopencv_java3 PROPERTIES IMPORTED_LOCATION</span><br><span class="line">        $&#123;CMAKE_SOURCE_DIR&#125;/src/main/jniLibs/$&#123;ANDROID_ABI&#125;/libopencv_java3.so)</span><br><span class="line">find_library( <span class="comment"># Sets the name of the path variable.</span></span><br><span class="line">        log-lib</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Specifies the name of the NDK library that</span></span><br><span class="line">        <span class="comment"># you want CMake to locate.</span></span><br><span class="line">        log)</span><br><span class="line"><span class="comment"># 设置可执行文件的输出目录</span></span><br><span class="line">set(EXECUTABLE_OUTPUT_PATH      <span class="string">"$&#123;CMAKE_SOURCE_DIR&#125;/src/main/assets/$&#123;ANDROID_ABI&#125;"</span>)</span><br><span class="line"><span class="comment"># 添加可执行文件的源文件</span></span><br><span class="line">add_executable(</span><br><span class="line">        test</span><br><span class="line"></span><br><span class="line">        src/main/cpp/main.cpp</span><br><span class="line">)</span><br><span class="line">target_link_libraries( <span class="comment"># Specifies the target library.</span></span><br><span class="line">        test</span><br><span class="line">        libopencv_java3</span><br><span class="line">        <span class="comment"># Links the target library to the log library</span></span><br><span class="line">        <span class="comment"># included in the NDK.</span></span><br><span class="line">        $&#123;log-lib&#125;)</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 <h3 id="依赖设置"><a href="#依赖设置" class="headerlink" title="依赖设置"></a>依赖设置</h3><h3 id="与Gradle结合"><a href="#与Gradle结合" class="headerlink" title="与Gradle结合"></a>与Gradle结合</h3><h2 id="新建Project"><a href="#新建Project" class="headerlink" title="新建Project"></a>新建Project</h2><p>用AndroidStudio创建项目，并选择Native C++支持</p>
 <h2 id="导入opencv头文件"><a href="#导入opencv头文件" class="headerlink" title="导入opencv头文件"></a>导入opencv头文件</h2><h2 id="导入opencv-so库"><a href="#导入opencv-so库" class="headerlink" title="导入opencv so库"></a>导入opencv so库</h2><h2 id="编译验证"><a href="#编译验证" class="headerlink" title="编译验证"></a>编译验证</h2>
@@ -557,12 +608,24 @@
                 
               
 
-              <time title="创建时间：2019-06-15 16:42:50 / 修改时间：17:06:17" itemprop="dateCreated datePublished" datetime="2019-06-15T16:42:50+08:00">2019-06-15</time>
+              <time title="创建时间：2019-06-15 16:42:50" itemprop="dateCreated datePublished" datetime="2019-06-15T16:42:50+08:00">2019-06-15</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-07-03 09:07:00" itemprop="dateModified" datetime="2019-07-03T09:07:00+08:00">2019-07-03</time>
               
             
           </span>
@@ -782,7 +845,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-15 16:39:16" itemprop="dateModified" datetime="2019-06-15T16:39:16+08:00">2019-06-15</time>
+                <time title="修改时间：2019-07-03 09:07:00" itemprop="dateModified" datetime="2019-07-03T09:07:00+08:00">2019-07-03</time>
               
             
           </span>
@@ -978,12 +1041,24 @@
                 
               
 
-              <time title="创建时间：2019-05-05 20:53:38 / 修改时间：21:12:12" itemprop="dateCreated datePublished" datetime="2019-05-05T20:53:38+08:00">2019-05-05</time>
+              <time title="创建时间：2019-05-05 20:53:38" itemprop="dateCreated datePublished" datetime="2019-05-05T20:53:38+08:00">2019-05-05</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-07-03 09:07:00" itemprop="dateModified" datetime="2019-07-03T09:07:00+08:00">2019-07-03</time>
               
             
           </span>
@@ -1172,24 +1247,12 @@
                 
               
 
-              <time title="创建时间：2019-04-15 15:14:26" itemprop="dateCreated datePublished" datetime="2019-04-15T15:14:26+08:00">2019-04-15</time>
+              <time title="创建时间：2019-04-15 15:14:26 / 修改时间：16:25:38" itemprop="dateCreated datePublished" datetime="2019-04-15T15:14:26+08:00">2019-04-15</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-05-05 19:58:19" itemprop="dateModified" datetime="2019-05-05T19:58:19+08:00">2019-05-05</time>
               
             
           </span>
@@ -1402,24 +1465,12 @@
                 
               
 
-              <time title="创建时间：2019-04-15 15:10:22" itemprop="dateCreated datePublished" datetime="2019-04-15T15:10:22+08:00">2019-04-15</time>
+              <time title="创建时间：2019-04-15 15:10:22 / 修改时间：18:27:37" itemprop="dateCreated datePublished" datetime="2019-04-15T15:10:22+08:00">2019-04-15</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-05-05 19:58:19" itemprop="dateModified" datetime="2019-05-05T19:58:19+08:00">2019-05-05</time>
               
             
           </span>
@@ -1618,24 +1669,12 @@
                 
               
 
-              <time title="创建时间：2019-03-29 20:37:26" itemprop="dateCreated datePublished" datetime="2019-03-29T20:37:26+08:00">2019-03-29</time>
+              <time title="创建时间：2019-03-29 20:37:26 / 修改时间：20:52:16" itemprop="dateCreated datePublished" datetime="2019-03-29T20:37:26+08:00">2019-03-29</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-05-05 19:58:19" itemprop="dateModified" datetime="2019-05-05T19:58:19+08:00">2019-05-05</time>
               
             
           </span>
@@ -1801,12 +1840,24 @@
                 
               
 
-              <time title="创建时间：2019-03-24 15:10:26 / 修改时间：16:12:39" itemprop="dateCreated datePublished" datetime="2019-03-24T15:10:26+08:00">2019-03-24</time>
+              <time title="创建时间：2019-03-24 15:10:26" itemprop="dateCreated datePublished" datetime="2019-03-24T15:10:26+08:00">2019-03-24</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-29 20:14:11" itemprop="dateModified" datetime="2019-03-29T20:14:11+08:00">2019-03-29</time>
               
             
           </span>
@@ -1938,180 +1989,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.vectoros.club/2019/03/23/Hexo-tutorial/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Vectoros">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.webp">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Keep Learning">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/03/23/Hexo-tutorial/" class="post-title-link" itemprop="url">Hexo tutorial</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-03-23 14:28:28" itemprop="dateCreated datePublished" datetime="2019-03-23T14:28:28+08:00">2019-03-23</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Web/" itemprop="url" rel="index"><span itemprop="name">Web</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>OR<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo s</span><br></pre></td></tr></table></figure></p>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>OR<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g</span><br></pre></td></tr></table></figure></p>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>OR<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo d</span><br></pre></td></tr></table></figure></p>
-<h3 id="Generate-Categories"><a href="#Generate-Categories" class="headerlink" title="Generate Categories"></a>Generate Categories</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new page categories</span><br></pre></td></tr></table></figure>
-<p>Then open <code>source/categories/index.md</code>, Add <code>type: &quot;categories&quot;</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2019-03-09 13:31:42</span><br><span class="line">type: &quot;categories&quot;</span><br><span class="line">comments: false</span><br><span class="line">---</span><br></pre></td></tr></table></figure></p>
-<h3 id="Generate-Tags"><a href="#Generate-Tags" class="headerlink" title="Generate Tags"></a>Generate Tags</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new page tags</span><br></pre></td></tr></table></figure>
-<p>Then open <code>source/tags/index.md</code>, Add <code>type: &quot;tags&quot;</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2019-03-09 13:31:42</span><br><span class="line">type: &quot;tags&quot;</span><br><span class="line">comments: false</span><br><span class="line">---</span><br></pre></td></tr></table></figure></p>
-<h3 id="Using-tags-or-categories"><a href="#Using-tags-or-categories" class="headerlink" title="Using tags or categories"></a>Using tags or categories</h3><p>Adding categories or tags description on page title<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: Hexo tutorial</span><br><span class="line">tag: [Hexo,Tutorial]</span><br><span class="line">categories: </span><br><span class="line">- Web</span><br><span class="line">---</span><br></pre></td></tr></table></figure></p>
-<h3 id="Clean-caches-and-regenerated"><a href="#Clean-caches-and-regenerated" class="headerlink" title="Clean caches and regenerated"></a>Clean caches and regenerated</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean</span><br><span class="line">$ hexo g</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.vectoros.club/2019/03/18/Numpy-函数中axis的含义/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2174,7 +2051,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-23 14:28:28" itemprop="dateModified" datetime="2019-03-23T14:28:28+08:00">2019-03-23</time>
+                <time title="修改时间：2019-03-19 21:38:55" itemprop="dateModified" datetime="2019-03-19T21:38:55+08:00">2019-03-19</time>
               
             
           </span>
@@ -2280,6 +2157,212 @@
 </ul>
 </li>
 </ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.vectoros.club/2019/03/09/AndroidStudio-Gradle-全局参数配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vectoros">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.webp">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Learning">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/09/AndroidStudio-Gradle-全局参数配置/" class="post-title-link" itemprop="url">AndroidStudio Gradle 全局参数配置</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-09 13:18:36" itemprop="dateCreated datePublished" datetime="2019-03-09T13:18:36+08:00">2019-03-09</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-15 15:04:47" itemprop="dateModified" datetime="2019-03-15T15:04:47+08:00">2019-03-15</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="先提出以下两个问题"><a href="#先提出以下两个问题" class="headerlink" title="先提出以下两个问题"></a>先提出以下两个问题</h2><ul>
+<li><strong>在开发Android应用时，如何将配置参数应用到所有的AndroidStudio项目中？</strong></li>
+<li><strong>有些敏感信息我们不希望包含在工程中，跟随代码提交，比如签名相关信息。</strong></li>
+</ul>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>我们可以利用Gradle的全局配置文件，为我们所有的项目配置相关参数，解决以上两个问题。</p>
+<ul>
+<li>Windows平台在 <code>C:\Users\user\.gradle</code> 目录下</li>
+<li>Linux平台在 <code>/home/user/.gradle</code> 目录下</li>
+<li>Mac平台类似，找到<code>gradle</code>的目录即可</li>
+</ul>
+<h3 id="下面以配置签名信息为例："><a href="#下面以配置签名信息为例：" class="headerlink" title="下面以配置签名信息为例："></a>下面以配置签名信息为例：</h3><ol>
+<li>打开<code>gradle.properties</code>文件，在文件末尾增加如下信息：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">KEYSTOREFILE=../../keystore/android.keystore</span><br><span class="line">KEYALIAS=release</span><br><span class="line">KEYPASSWORD=helloworld</span><br><span class="line">STOREPASSWORD=helloworld</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li><strong>注意</strong><ul>
+<li>这里的配置信息是没有<code>&quot;&quot;</code>双引号的，有引号会导致异常。</li>
+<li><code>KEYSOTREFILE</code>使用的是相对目录，相对于<code>app/build.gradle</code>文件所在的目录。</li>
+<li>比如我这个文件就位于和工程文件夹相同级别的目录<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">MyProject/app/build.gradle</span><br><span class="line">MyProject1/app/build.gradle</span><br><span class="line">MyProject2/app/build.gradle</span><br><span class="line">MyProject3/app/build.gradle</span><br><span class="line">keystore/android.keystore</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li><p>在到对应的工程下面，打开app/build.gradle</p>
+<ul>
+<li>增加signingConfigs</li>
+<li>在buildTypes release里面增加signConfig配置<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion 28</span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        applicationId &quot;com.example.test&quot;</span><br><span class="line">        minSdkVersion 21</span><br><span class="line">        targetSdkVersion 28</span><br><span class="line">        versionCode 1</span><br><span class="line">        versionName &quot;1.0&quot;</span><br><span class="line">        testInstrumentationRunner &quot;androidx.test.runner.AndroidJUnitRunner&quot;</span><br><span class="line">    &#125;</span><br><span class="line">    // 增加签名配置</span><br><span class="line">    signingConfigs&#123;</span><br><span class="line">        releaseConfig&#123;</span><br><span class="line">            keyAlias KEYALIAS //引用刚才配置的参数</span><br><span class="line">            keyPassword KEYPASSWORD</span><br><span class="line">            storePassword STOREPASSWORD</span><br><span class="line">            storeFile file(KEYSTOREFILE)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        release &#123;</span><br><span class="line">            signingConfig signingConfigs.releaseConfig //引用配置文件</span><br><span class="line">            minifyEnabled false</span><br><span class="line">            proguardFiles getDefaultProguardFile(&apos;proguard-android.txt&apos;), &apos;proguard-rules.pro&apos;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>这样配置后，即使代码提交了，也不会将签名信息提交，其他开发者把代码拉下来后，只需要到<code>gradle.properties</code>里面配置好对应的参数即可。其他全局配置也可以这么操作。</p>
+</li>
+</ol>
 
           
         
