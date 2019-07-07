@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="Keep Learning">
 <meta property="og:description" content="简介 Opencv是目前计算机视觉里面非常常用的一个开源库，支持各大平台  准备条件 AndroidStudio 最新版本 SDK Manager里面安装SDK, NDK Opencv 3.4/4.01wget https://codeload.github.com/opencv/opencv/zip/3.4.6   准备知识-CMakeAndroidStudio 支持cmake编译C/C++文件">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-07T05:43:51.846Z">
+<meta property="og:updated_time" content="2019-07-07T07:08:34.270Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AndroidStudio Opencv NDK tutorial">
 <meta name="twitter:description" content="简介 Opencv是目前计算机视觉里面非常常用的一个开源库，支持各大平台  准备条件 AndroidStudio 最新版本 SDK Manager里面安装SDK, NDK Opencv 3.4/4.01wget https://codeload.github.com/opencv/opencv/zip/3.4.6   准备知识-CMakeAndroidStudio 支持cmake编译C/C++文件">
@@ -400,7 +400,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-07 13:43:51" itemprop="dateModified" datetime="2019-07-07T13:43:51+08:00">2019-07-07</time>
+                <time title="修改时间：2019-07-07 15:08:34" itemprop="dateModified" datetime="2019-07-07T15:08:34+08:00">2019-07-07</time>
               
             
           </span>
@@ -464,8 +464,8 @@
 <h2 id="准备知识-CMake"><a href="#准备知识-CMake" class="headerlink" title="准备知识-CMake"></a>准备知识-CMake</h2><p>AndroidStudio 支持cmake编译C/C++文件，通过编写CMakeList.txt来实现</p>
 <h3 id="常用变量"><a href="#常用变量" class="headerlink" title="常用变量"></a>常用变量</h3><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$&#123;CMAKE_SOURCE_DIR&#125; <span class="comment"># CMakeLists.txt文件所在位置</span></span><br><span class="line">$&#123;ANDROID_ABI&#125; <span class="comment"># Android ABI架构 ("armeabi-v7a","arm64-v8a")</span></span><br></pre></td></tr></table></figure>
 <h3 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h3><ul>
-<li><p>设置变量值</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set(VARIABLE, VALUE)</span><br></pre></td></tr></table></figure>
+<li><p>常用指令</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Set project</span></span><br><span class="line">project(demo)</span><br><span class="line"><span class="comment"># Set variable</span></span><br><span class="line">set(VARIABLE, VALUE)</span><br><span class="line"><span class="comment"># Show message</span></span><br><span class="line">message($&#123;ANDROID_ABI&#125;)</span><br><span class="line"><span class="comment"># if else</span></span><br><span class="line">if($&#123;ANDROID_ABI&#125; STREQUAL <span class="string">"areambi"</span>)</span><br><span class="line">    message(<span class="string">"armv5"</span>)</span><br><span class="line">elseif($&#123;ANDROID_ABI&#125; STREQUAL <span class="string">"areambi-v7a"</span>)</span><br><span class="line">    message(<span class="string">"armv7a"</span>)</span><br><span class="line">elseif($&#123;ANDROID_ABI&#125; STREQUAL <span class="string">"arm64-v8a"</span>)</span><br><span class="line">    message(<span class="string">"armv8a"</span>)</span><br><span class="line">elseif($&#123;ANDROID_ABI&#125; STREQUAL <span class="string">"x86_64"</span>)</span><br><span class="line">    message(<span class="string">"x86_64"</span>)</span><br><span class="line">elseif($&#123;ANDROID_ABI&#125; STREQUAL <span class="string">"x86"</span>)</span><br><span class="line">    message(<span class="string">"x86"</span>)</span><br><span class="line"><span class="keyword">else</span>()</span><br><span class="line">    message(<span class="string">"unknown abi"</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>添加共享库</p>
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">add_library( </span><br><span class="line"><span class="comment"># Sets the name of the library.</span></span><br><span class="line">native-lib</span><br><span class="line"><span class="comment"># Sets the library as a shared library.</span></span><br><span class="line">SHARED</span><br><span class="line"><span class="comment"># Provides a relative path to your source file(s).</span></span><br><span class="line">src/main/cpp/native-lib.cpp)</span><br></pre></td></tr></table></figure>
@@ -484,6 +484,9 @@
 </li>
 <li><p>手动指定共享库</p>
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">add_library(libopencv_java3 SHARED IMPORTED)</span><br><span class="line">set_target_properties(libopencv_java3 PROPERTIES IMPORTED_LOCATION</span><br><span class="line">        $&#123;CMAKE_SOURCE_DIR&#125;/src/main/jniLibs/$&#123;ANDROID_ABI&#125;/libopencv_java3.so)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查找所有源文件，并保存到<code>IR_SRCS</code>变量，但是不能查找子目录</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aux_source_directory($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp DIR_SRCS)</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="编译器设置"><a href="#编译器设置" class="headerlink" title="编译器设置"></a>编译器设置</h3><p>我们可以在CMakeLists.txt里面设置编译器参数，也可以在build.gradle脚本里面设置</p>
