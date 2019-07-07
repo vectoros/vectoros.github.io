@@ -13,6 +13,9 @@ categories:
 * AndroidStudio 最新版本
 * SDK Manager里面安装SDK, NDK
 * Opencv 3.4/4.0
+```
+wget https://codeload.github.com/opencv/opencv/zip/3.4.6
+```
 
 
 ## 准备知识-CMake
@@ -98,8 +101,10 @@ set_target_properties(libopencv_java3 PROPERTIES IMPORTED_LOCATION
 我们可以在CMakeLists.txt里面设置编译器参数，也可以在build.gradle脚本里面设置
 
 * CMakeLists.txt 设置
-```
-
+```makefile
+#支持-std=gnu++11
+set(CMAKE_VERBOSE_MAKEFILE on)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
 ```
 
 * build.gradle 脚本设置
@@ -220,8 +225,30 @@ target_link_libraries( # Specifies the target library.
 用AndroidStudio创建项目，并选择Native C++支持
 
 ## 导入opencv头文件
+1. 在`src/main/cpp`目录下创建`include`目录
+2. 将opencv SDK解压后，`sdk/native/jni/include/`目录下的两个头文件文件夹`opencv, opencv2`复制到上面创建的`include`目录下
+3. CMakeList.txt添加对应引用
+```
+include_directories(${CMAKE_SOURCE_DIR}/src/main/cpp/include/)
+```
+
 
 ## 导入opencv so库
+1. 创建`src/main/jniLibs`目录，用于存放第三方共享库
+2. 将opencv SDK解压后，`sdk/native/libs/`目录下的`so`文件文件夹复制到上面创建的`jniLibs`目录下，这些文件夹是以`abi`为目录保存的。
+3. CMakeList.txt添加对应依赖
+```makefile
+add_library(libopencv_java3 SHARED IMPORTED)
+set_target_properties(libopencv_java3 PROPERTIES IMPORTED_LOCATION
+        ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libopencv_java3.so)
+```
+
+## jni引用opencv方法
+```c++
+#include "opencv2/core.hpp"
+using namespace cv;
+
+```
 
 ## 编译验证
 
