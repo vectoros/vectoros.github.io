@@ -29,9 +29,28 @@ ${ANDROID_ABI} # Android ABI架构 ("armeabi-v7a","arm64-v8a")
 
 ### 常用函数
 
-* 设置变量值
+* 常用指令
 ```makefile
+# Set project
+project(demo)
+# Set variable
 set(VARIABLE, VALUE)
+# Show message
+message(${ANDROID_ABI})
+# if else
+if(${ANDROID_ABI} STREQUAL "areambi")
+    message("armv5")
+elseif(${ANDROID_ABI} STREQUAL "areambi-v7a")
+    message("armv7a")
+elseif(${ANDROID_ABI} STREQUAL "arm64-v8a")
+    message("armv8a")
+elseif(${ANDROID_ABI} STREQUAL "x86_64")
+    message("x86_64")
+elseif(${ANDROID_ABI} STREQUAL "x86")
+    message("x86")
+else()
+    message("unknown abi")
+endif()
 ```
 
 * 添加共享库
@@ -94,6 +113,11 @@ include_directories(${CMAKE_SOURCE_DIR}/src/main/cpp/opencv)
 add_library(libopencv_java3 SHARED IMPORTED)
 set_target_properties(libopencv_java3 PROPERTIES IMPORTED_LOCATION
         ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libopencv_java3.so)
+```
+
+* 查找所有源文件，并保存到`IR_SRCS`变量，但是不能查找子目录
+```makefile
+aux_source_directory(${CMAKE_SOURCE_DIR}/src/main/cpp DIR_SRCS)
 ```
 
 
