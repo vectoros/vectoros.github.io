@@ -15,7 +15,7 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -100,11 +100,11 @@
 <meta name="keywords" content="Android,Background Tasks,IntentService">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 后台任务之 IntentService">
-<meta property="og:url" content="http://www.vectoros.club/2019/04/15/Android-后台任务之-IntentService/index.html">
+<meta property="og:url" content="http://www.vectoros.club/post/2fa13cac.html">
 <meta property="og:site_name" content="Keep Learning">
 <meta property="og:description" content="IntentService 是Android SDK中引入的一个非常好用的，有效的单线程后台任务工具 优点 不影响UI响应 不受生命周期影响  限制 不能和UI直接交互 任务顺序运行，一次只能运行一个任务 不能被中断  创建方式 继承IntentService类 提供一个默认的构造函数 实现onHandleIntent(Intent workIntent)来处理后台任务 在Manifest文件中声">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-15T10:27:37.126Z">
+<meta property="og:updated_time" content="2019-10-08T07:33:30.139Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 后台任务之 IntentService">
 <meta name="twitter:description" content="IntentService 是Android SDK中引入的一个非常好用的，有效的单线程后台任务工具 优点 不影响UI响应 不受生命周期影响  限制 不能和UI直接交互 任务顺序运行，一次只能运行一个任务 不能被中断  创建方式 继承IntentService类 提供一个默认的构造函数 实现onHandleIntent(Intent workIntent)来处理后台任务 在Manifest文件中声">
@@ -114,7 +114,7 @@
 
 
 
-  <link rel="canonical" href="http://www.vectoros.club/2019/04/15/Android-后台任务之-IntentService/">
+  <link rel="canonical" href="http://www.vectoros.club/post/2fa13cac.html">
 
 
 
@@ -340,7 +340,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.vectoros.club/2019/04/15/Android-后台任务之-IntentService/">
+    <link itemprop="mainEntityOfPage" href="http://www.vectoros.club/post/2fa13cac.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Vectoros">
@@ -383,12 +383,24 @@
                 
               
 
-              <time title="创建时间：2019-04-15 15:10:22 / 修改时间：18:27:37" itemprop="dateCreated datePublished" datetime="2019-04-15T15:10:22+08:00">2019-04-15</time>
+              <time title="创建时间：2019-04-15 15:10:22" itemprop="dateCreated datePublished" datetime="2019-04-15T15:10:22+08:00">2019-04-15</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-10-08 15:33:30" itemprop="dateModified" datetime="2019-10-08T15:33:30+08:00">2019-10-08</time>
               
             
           </span>
@@ -477,6 +489,7 @@
 </li>
 <li><p><code>MainActivity.java</code></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> <span class="keyword">implements</span> <span class="title">View</span>.<span class="title">OnClickListener</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> BroadcastReceiver weatherResultReceiver;</span><br><span class="line">    <span class="keyword">private</span> TextView temperature;</span><br><span class="line">    <span class="keyword">private</span> EditText city;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        city = findViewById(R.id.city);</span><br><span class="line">        temperature = findViewById(R.id.temperature);</span><br><span class="line">        findViewById(R.id.refresh).setOnClickListener(<span class="keyword">this</span>);</span><br><span class="line">        findViewById(R.id.clear).setOnClickListener(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">        weatherResultReceiver = <span class="keyword">new</span> BroadcastReceiver() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Context context, Intent intent)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(intent == <span class="keyword">null</span>)&#123;</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                String action = intent.getAction();</span><br><span class="line">                <span class="keyword">if</span>(Constants.ACTION_WEATHER_RESULT.equals(action))&#123;</span><br><span class="line">                    <span class="keyword">int</span> temp = intent.getIntExtra(Constants.TEMPERATURE,Constants.TEMPERATURE_DEFAULT);</span><br><span class="line">                    temperature.setText(String.valueOf(temp));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        IntentFilter intentFilter = <span class="keyword">new</span> IntentFilter();</span><br><span class="line">        intentFilter.addAction(Constants.ACTION_WEATHER_RESULT);</span><br><span class="line"></span><br><span class="line">        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(weatherResultReceiver, intentFilter);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(weatherResultReceiver);</span><br><span class="line">        <span class="keyword">super</span>.onDestroy();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> id = v.getId();</span><br><span class="line">        <span class="keyword">switch</span> (id)&#123;</span><br><span class="line">            <span class="keyword">case</span> R.id.refresh:</span><br><span class="line">                String cityName = city.getText().toString();</span><br><span class="line">                Intent intent = <span class="keyword">new</span> Intent(MainActivity.<span class="keyword">this</span>, WeatherFetchService.class);</span><br><span class="line">                intent.putExtra(Constants.CITY_NAME, cityName);</span><br><span class="line">                startService(intent);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> R.id.clear:</span><br><span class="line">                city.setText(<span class="string">""</span>);</span><br><span class="line">                temperature.setText(<span class="string">""</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 </li>
 </ul>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
@@ -524,7 +537,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/29/Android-Create-Platform-Keystore-for-AndroidStudio/" rel="next" title="Android Create Platform Keystore for AndroidStudio">
+              <a href="/post/a94712d2.html" rel="next" title="Android Create Platform Keystore for AndroidStudio">
                 <i class="fa fa-chevron-left"></i> Android Create Platform Keystore for AndroidStudio
               </a>
             
@@ -534,7 +547,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/04/15/Android-后台任务/" rel="prev" title="Android 后台任务">
+              <a href="/post/9dbfc6f1.html" rel="prev" title="Android 后台任务">
                 Android 后台任务 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -808,7 +821,7 @@
 </div>
 
 
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
 
 
 

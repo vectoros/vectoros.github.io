@@ -15,7 +15,7 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -100,11 +100,11 @@
 <meta name="keywords" content="Android,NDK,OpenCV,CMake">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Compiler OpenCV under the NDK toolchain">
-<meta property="og:url" content="http://www.vectoros.club/2019/10/08/Compiler-Opencv-under-the-NDK-toolchain/index.html">
+<meta property="og:url" content="http://www.vectoros.club/post/af4251a0.html">
 <meta property="og:site_name" content="Keep Learning">
 <meta property="og:description" content="为什么要手动编译OpenCV正常情况下，我们利用OpenCV来开发Android应用，使用预编译的so和jar包已经足够了，但是在某些特殊情形下，我们希望自己编译OpenCV，借此来提高OpenCV的性能。 准备条件 Ubuntu 18.04 64Bit cmake NDK Reversion 17.2.4988734 OpenCV 4.0.1 Android API Target armeabi">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-08T03:46:12.016Z">
+<meta property="og:updated_time" content="2019-10-08T07:33:30.147Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Compiler OpenCV under the NDK toolchain">
 <meta name="twitter:description" content="为什么要手动编译OpenCV正常情况下，我们利用OpenCV来开发Android应用，使用预编译的so和jar包已经足够了，但是在某些特殊情形下，我们希望自己编译OpenCV，借此来提高OpenCV的性能。 准备条件 Ubuntu 18.04 64Bit cmake NDK Reversion 17.2.4988734 OpenCV 4.0.1 Android API Target armeabi">
@@ -114,7 +114,7 @@
 
 
 
-  <link rel="canonical" href="http://www.vectoros.club/2019/10/08/Compiler-Opencv-under-the-NDK-toolchain/">
+  <link rel="canonical" href="http://www.vectoros.club/post/af4251a0.html">
 
 
 
@@ -340,7 +340,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.vectoros.club/2019/10/08/Compiler-Opencv-under-the-NDK-toolchain/">
+    <link itemprop="mainEntityOfPage" href="http://www.vectoros.club/post/af4251a0.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Vectoros">
@@ -383,7 +383,7 @@
                 
               
 
-              <time title="创建时间：2019-10-08 10:56:00 / 修改时间：11:46:12" itemprop="dateCreated datePublished" datetime="2019-10-08T10:56:00+08:00">2019-10-08</time>
+              <time title="创建时间：2019-10-08 10:56:00 / 修改时间：15:33:30" itemprop="dateCreated datePublished" datetime="2019-10-08T10:56:00+08:00">2019-10-08</time>
             
 
             
@@ -469,6 +469,7 @@
 </li>
 <li><p>下载后解压到特定目录</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unzip android-ndk-r17c-linux-x86_64.zip</span><br><span class="line">mv android-ndk-r17c /opt/ndk</span><br></pre></td></tr></table></figure>
+
 </li>
 </ol>
 <h2 id="下载OpenCV源码"><a href="#下载OpenCV源码" class="headerlink" title="下载OpenCV源码"></a>下载OpenCV源码</h2><ol>
@@ -477,6 +478,7 @@
 </li>
 <li><p>从Github上下载</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/opencv/opencv.git opencv</span><br></pre></td></tr></table></figure>
+
 </li>
 </ol>
 <h2 id="编译OpenCV"><a href="#编译OpenCV" class="headerlink" title="编译OpenCV"></a>编译OpenCV</h2><ol>
@@ -496,6 +498,7 @@
 </li>
 </ol>
 <h2 id="编译配置解析"><a href="#编译配置解析" class="headerlink" title="编译配置解析"></a>编译配置解析</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">-DCMAKE_TOOLCHAIN_FILE=/opt/ndk/build/cmake/android.toolchain.cmake <span class="comment"># 指定编译工具链cmake脚本</span></span><br><span class="line">-DANDROID_NDK=/opt/ndk <span class="comment"># 指定NDK路径</span></span><br><span class="line">-DANDROID_NATIVE_API_LEVEL=android-<span class="number">21</span> <span class="comment"># 指定NDK API Level</span></span><br><span class="line">-DCMAKE_BUILD_TYPE=Release <span class="comment"># 指定编译类型，默认是Debug类型，Release会有性能上的提升</span></span><br><span class="line">-DENABLE_VFPV3=<span class="keyword">ON</span> <span class="comment"># 开启VFP优化选项</span></span><br><span class="line">-DANDROID_ARM_NEON=<span class="keyword">TRUE</span> <span class="comment"># 设置NDK支持NEON</span></span><br><span class="line">-DENABLE_NEON=<span class="keyword">ON</span> <span class="comment"># 开启O彭CV NEON优化选项</span></span><br><span class="line">-DBUILD_PNG=<span class="keyword">ON</span> <span class="comment"># 编译PNG模块</span></span><br><span class="line">-DBUILD_JASPER=<span class="keyword">ON</span> <span class="comment"># 编译JASPER模块</span></span><br><span class="line">-DBUILD_JPEG=<span class="keyword">ON</span> <span class="comment"># 编译JPEG模块</span></span><br><span class="line">-DBUILD_TIFF=<span class="keyword">ON</span> <span class="comment"># 编译TIFF模块</span></span><br><span class="line">-DBUILD_ZLIB=<span class="keyword">ON</span> <span class="comment"># 编译ZLIB模块</span></span><br><span class="line">-DWITH_JPEG=<span class="keyword">ON</span> <span class="comment"># 生成JPEG模块</span></span><br><span class="line">-DWITH_PNG=<span class="keyword">ON</span> <span class="comment"># 生成PNG模块</span></span><br><span class="line">-DWITH_JASPER=<span class="keyword">ON</span> <span class="comment"># 生成JASPER模块</span></span><br><span class="line">-DWITH_TIFF=<span class="keyword">ON</span> <span class="comment"># 生成TIFF模块</span></span><br><span class="line">-DSOFTFP=<span class="keyword">ON</span> <span class="comment"># 开启SOFTFP</span></span><br><span class="line">-DBUILD_JAVA=<span class="keyword">OFF</span> <span class="comment"># 编译Java，这里只需要C++版本，如果需要java，设置为ON</span></span><br><span class="line">-DBUILD_ANDROID_EXAMPLES=<span class="keyword">OFF</span> <span class="comment"># 编译Android Examples</span></span><br><span class="line">-DBUILD_ANDROID_PROJECTS=<span class="keyword">OFF</span> <span class="comment"># 编译Android Projects</span></span><br><span class="line">-DANDROID_STL=c++_shared <span class="comment"># 指定STL版本，新版NDK里面默认使用c++_shared</span></span><br><span class="line">-DANDROID_ABI=armeabi-v7a <span class="comment"># 指定生成ABI版本</span></span><br><span class="line">-DBUILD_SHARED_LIBS=<span class="keyword">ON</span> <span class="comment"># 是否生成共享so库，如果不设置，默认生成.a静态库</span></span><br><span class="line">-DCMAKE_INSTALL_PREFIX=opencv/<span class="keyword">install</span> <span class="comment"># 安装路径，用于生成需要的头文件和so或者.a静态库（可选）</span></span><br><span class="line">.. <span class="comment"># 指定OpenCV代码根目录（重要）</span></span><br></pre></td></tr></table></figure>
+
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
 <li><a href="https://www.learnopencv.com/install-opencv-on-android-tiny-and-optimized/" target="_blank" rel="noopener">https://www.learnopencv.com/install-opencv-on-android-tiny-and-optimized/</a></li>
 <li><a href="https://www.sisik.eu/blog/android/ndk/opencv-without-java" target="_blank" rel="noopener">https://www.sisik.eu/blog/android/ndk/opencv-without-java</a></li>
@@ -542,7 +545,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/02/AndroidStudio-Opencv-NDK-tutorial/" rel="next" title="AndroidStudio OpenCV NDK tutorial">
+              <a href="/post/dd932aba.html" rel="next" title="AndroidStudio OpenCV NDK tutorial">
                 <i class="fa fa-chevron-left"></i> AndroidStudio OpenCV NDK tutorial
               </a>
             
@@ -822,7 +825,7 @@
 </div>
 
 
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
 
 
 
