@@ -1,20 +1,22 @@
 ---
-title: AndroidStudio Opencv NDK tutorial
+title: AndroidStudio OpenCV NDK tutorial
 date: 2019-07-02 21:47:09
 tags: [AndroidStudio,Gradle,Tutorial]
 categories:
 - Android
+- OpenCV
+- NDK
 ---
 
 ## 简介
-* Opencv是目前计算机视觉里面非常常用的一个开源库，支持各大平台
+* OpenCV是目前计算机视觉里面非常常用的一个开源库，支持各大平台
 
 ## 准备条件
 * AndroidStudio 最新版本
 * SDK Manager里面安装SDK, NDK
-* Opencv 3.4/4.0
+* OpenCV 3.4/4.0
 ```
-wget https://codeload.github.com/opencv/opencv/zip/3.4.6
+wget https://codeload.github.com/OpenCV/OpenCV/zip/3.4.6
 ```
 
 
@@ -105,14 +107,14 @@ target_link_libraries( # Specifies the target library.
 * 指定包含头文件
 ```makefile
 include_directories(${CMAKE_SOURCE_DIR}/src/main/cpp/include/)
-include_directories(${CMAKE_SOURCE_DIR}/src/main/cpp/opencv)
+include_directories(${CMAKE_SOURCE_DIR}/src/main/cpp/OpenCV)
 ```
 
 * 手动指定共享库
 ```makefile
-add_library(libopencv_java3 SHARED IMPORTED)
-set_target_properties(libopencv_java3 PROPERTIES IMPORTED_LOCATION
-        ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libopencv_java3.so)
+add_library(libOpenCV_java3 SHARED IMPORTED)
+set_target_properties(libOpenCV_java3 PROPERTIES IMPORTED_LOCATION
+        ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libOpenCV_java3.so)
 ```
 
 * 查找所有源文件，并保存到`IR_SRCS`变量，但是不能查找子目录
@@ -153,11 +155,11 @@ android {
 ### 输出设置
 * 动态共享库 `.so`
 ```makefile
-include_directories(${CMAKE_SOURCE_DIR}/src/main/cpp/opencv)
+include_directories(${CMAKE_SOURCE_DIR}/src/main/cpp/OpenCV)
 include_directories(${CMAKE_SOURCE_DIR}/src/main/cpp/include/)
-add_library(libopencv_java3 SHARED IMPORTED)
-set_target_properties(libopencv_java3 PROPERTIES IMPORTED_LOCATION
-        ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libopencv_java3.so)
+add_library(libOpenCV_java3 SHARED IMPORTED)
+set_target_properties(libOpenCV_java3 PROPERTIES IMPORTED_LOCATION
+        ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libOpenCV_java3.so)
 find_library( # Sets the name of the path variable.
         log-lib
 
@@ -175,7 +177,7 @@ add_library( # Sets the name of the library.
         src/main/cpp/native-lib.cpp)
 target_link_libraries( # Specifies the target library.
         native-lib
-        libopencv_java3
+        libOpenCV_java3
         # Links the target library to the log library
         # included in the NDK.
         ${log-lib})
@@ -183,11 +185,11 @@ target_link_libraries( # Specifies the target library.
 
 * 静态共享库 `.a`
 ```makefile
-include_directories(${CMAKE_SOURCE_DIR}/src/main/cpp/opencv)
+include_directories(${CMAKE_SOURCE_DIR}/src/main/cpp/OpenCV)
 include_directories(${CMAKE_SOURCE_DIR}/src/main/cpp/include/)
-add_library(libopencv_java3 SHARED IMPORTED)
-set_target_properties(libopencv_java3 PROPERTIES IMPORTED_LOCATION
-        ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libopencv_java3.so)
+add_library(libOpenCV_java3 SHARED IMPORTED)
+set_target_properties(libOpenCV_java3 PROPERTIES IMPORTED_LOCATION
+        ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libOpenCV_java3.so)
 find_library( # Sets the name of the path variable.
         log-lib
 
@@ -205,7 +207,7 @@ add_library( # Sets the name of the library.
         src/main/cpp/native-lib.cpp)
 target_link_libraries( # Specifies the target library.
         native-lib
-        libopencv_java3
+        libOpenCV_java3
         # Links the target library to the log library
         # included in the NDK.
         ${log-lib})
@@ -213,11 +215,11 @@ target_link_libraries( # Specifies the target library.
 
 * Executable
 ```makefile
-include_directories(${CMAKE_SOURCE_DIR}/src/main/cpp/opencv)
+include_directories(${CMAKE_SOURCE_DIR}/src/main/cpp/OpenCV)
 include_directories(${CMAKE_SOURCE_DIR}/src/main/cpp/include/)
-add_library(libopencv_java3 SHARED IMPORTED)
-set_target_properties(libopencv_java3 PROPERTIES IMPORTED_LOCATION
-        ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libopencv_java3.so)
+add_library(libOpenCV_java3 SHARED IMPORTED)
+set_target_properties(libOpenCV_java3 PROPERTIES IMPORTED_LOCATION
+        ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libOpenCV_java3.so)
 find_library( # Sets the name of the path variable.
         log-lib
 
@@ -234,7 +236,7 @@ add_executable(
 )
 target_link_libraries( # Specifies the target library.
         test
-        libopencv_java3
+        libOpenCV_java3
         # Links the target library to the log library
         # included in the NDK.
         ${log-lib})
@@ -248,28 +250,28 @@ target_link_libraries( # Specifies the target library.
 ## 新建Project
 用AndroidStudio创建项目，并选择Native C++支持
 
-## 导入opencv头文件
+## 导入OpenCV头文件
 1. 在`src/main/cpp`目录下创建`include`目录
-2. 将opencv SDK解压后，`sdk/native/jni/include/`目录下的两个头文件文件夹`opencv, opencv2`复制到上面创建的`include`目录下
+2. 将OpenCV SDK解压后，`sdk/native/jni/include/`目录下的两个头文件文件夹`OpenCV, OpenCV2`复制到上面创建的`include`目录下
 3. CMakeList.txt添加对应引用
 ```
 include_directories(${CMAKE_SOURCE_DIR}/src/main/cpp/include/)
 ```
 
 
-## 导入opencv so库
+## 导入OpenCV so库
 1. 创建`src/main/jniLibs`目录，用于存放第三方共享库
-2. 将opencv SDK解压后，`sdk/native/libs/`目录下的`so`文件文件夹复制到上面创建的`jniLibs`目录下，这些文件夹是以`abi`为目录保存的。
+2. 将OpenCV SDK解压后，`sdk/native/libs/`目录下的`so`文件文件夹复制到上面创建的`jniLibs`目录下，这些文件夹是以`abi`为目录保存的。
 3. CMakeList.txt添加对应依赖
 ```makefile
-add_library(libopencv_java3 SHARED IMPORTED)
-set_target_properties(libopencv_java3 PROPERTIES IMPORTED_LOCATION
-        ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libopencv_java3.so)
+add_library(libOpenCV_java3 SHARED IMPORTED)
+set_target_properties(libOpenCV_java3 PROPERTIES IMPORTED_LOCATION
+        ${CMAKE_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libOpenCV_java3.so)
 ```
 
-## jni引用opencv方法
+## jni引用OpenCV方法
 ```c++
-#include "opencv2/core.hpp"
+#include "OpenCV2/core.hpp"
 using namespace cv;
 
 ```
