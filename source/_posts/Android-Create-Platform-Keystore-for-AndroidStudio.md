@@ -1,9 +1,13 @@
 ---
 title: Android Create Platform Keystore for AndroidStudio
+tags:
+  - Android
+  - Keystore
+  - AndroidStudio
+categories:
+  - Andorid
+abbrlink: a94712d2
 date: 2019-03-29 20:37:26
-tags: [Android, Keystore, AndroidStudio]
-categories: 
-- Andorid
 ---
 
 有时候我们需要在AndroidStudio中开发Android系统应用（带系统签名），为了方便开发，我们一般会生成一个debug.keystore，以下是操作步骤

@@ -1,10 +1,13 @@
 ---
 title: Android 后台任务
-date: 2019-04-15 15:14:26
-tags: [Android, Background Tasks]
+tags:
+  - Android
+  - Background Tasks
 categories:
-- Android
-- Develop
+  - Android
+  - Develop
+abbrlink: 9dbfc6f1
+date: 2019-04-15 15:14:26
 ---
 
 我们知道，在Android应用开发的过程中，不能在主线程中处理耗时任务，否则会导致UI卡顿，甚至ANR，非常影响用户体验，这就需要把这些耗时的任务，转移到后台去运行。

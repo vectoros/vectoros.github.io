@@ -1,12 +1,17 @@
 ---
 title: Convert Yolov3 cfg and weights files to keras h5 model
-date: 2019-05-05 20:53:38
-tags: [Yolov3, Keras, TensorFlow, TFLite]
+tags:
+  - Yolov3
+  - Keras
+  - TensorFlow
+  - TFLite
 categories:
-- Object Dection
-- TensorFlow
-- Keras
-- TFLite
+  - Object Dection
+  - TensorFlow
+  - Keras
+  - TFLite
+abbrlink: c17fb91d
+date: 2019-05-05 20:53:38
 ---
 
 Yolov3 是一个非常有效的用于目标检查的One-Stage模型，Backbone使用的是Darknet53，在平时用Keras比较多，所以想将其cfg和weights与训练权重转换成Keras的h5模型，在Github上找寻了一番，发现[keras-yolo3](https://github.com/qqwweee/keras-yolo3)这个工具非常有效，故基于此项目做了一定的修改[keras_yolov3](https://github.com/vectoros/keras-yolo3)。

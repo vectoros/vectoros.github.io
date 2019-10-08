@@ -1,11 +1,16 @@
 ---
 title: Compiler OpenCV under the NDK toolchain
+tags:
+  - Android
+  - NDK
+  - OpenCV
+  - CMake
+categories:
+  - Android
+  - NDK
+  - OpenCV
+abbrlink: af4251a0
 date: 2019-10-08 10:56:00
-tags: [Android,NDK,OpenCV,CMake]
-categories: 
-- Android
-- NDK
-- OpenCV
 ---
 
 ## 为什么要手动编译OpenCV

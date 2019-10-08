@@ -1,12 +1,15 @@
 ---
 title: Build Tensorflow Lite benchmark for Android
-date: 2019-06-15 16:42:50
-tags: ['TFLite', 'Android']
+tags:
+  - TFLite
+  - Android
 categories:
-- Tensorflow
-- TFLite
-- Android
-- Benchmark
+  - Tensorflow
+  - TFLite
+  - Android
+  - Benchmark
+abbrlink: 1b1cf1e2
+date: 2019-06-15 16:42:50
 ---
 
 我们在部署模型到Android端的时候，需要先评估模型的性能，Tensorflow官方给我们提供了TFLite的benchmark工具

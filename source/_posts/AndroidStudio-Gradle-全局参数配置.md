@@ -1,9 +1,13 @@
 ---
 title: AndroidStudio Gradle 全局参数配置
+tags:
+  - AndroidStudio
+  - Gradle
+  - Tutorial
+categories:
+  - Android
+abbrlink: 66cda814
 date: 2019-03-09 13:18:36
-tags: [AndroidStudio,Gradle,Tutorial]
-categories: 
-- Android
 ---
 ## 先提出以下两个问题 
 * **在开发Android应用时，如何将配置参数应用到所有的AndroidStudio项目中？**

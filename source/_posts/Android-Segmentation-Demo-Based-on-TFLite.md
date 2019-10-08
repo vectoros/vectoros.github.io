@@ -1,8 +1,9 @@
 ---
 title: Android Segmentation Demo Based on TFLite
+tags: 'Android, TFlite, Segmentation'
+categories: 'Android, TensorFlow'
+abbrlink: 1ce7ae9a
 date: 2019-03-24 15:10:26
-tags: Android, TFlite, Segmentation
-categories: Android, TensorFlow
 ---
 [TFLite](https://www.tensorflow.org/lite) 是Google基于TensorFlow 推出的移动端深度学习工具。我们可以利用这个工具，将训练好的模型部署到移动端设备上，支持(Android和iOS).
 

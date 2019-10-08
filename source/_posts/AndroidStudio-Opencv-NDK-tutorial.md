@@ -1,11 +1,15 @@
 ---
 title: AndroidStudio OpenCV NDK tutorial
-date: 2019-07-02 21:47:09
-tags: [AndroidStudio,Gradle,Tutorial]
+tags:
+  - AndroidStudio
+  - Gradle
+  - Tutorial
 categories:
-- Android
-- OpenCV
-- NDK
+  - Android
+  - OpenCV
+  - NDK
+abbrlink: dd932aba
+date: 2019-07-02 21:47:09
 ---
 
 ## 简介

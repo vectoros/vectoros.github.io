@@ -1,10 +1,14 @@
 ---
 title: Android 后台任务之 IntentService
-date: 2019-04-15 15:10:22
-tags: [Android, Background Tasks, IntentService]
+tags:
+  - Android
+  - Background Tasks
+  - IntentService
 categories:
-- Android
-- Develop
+  - Android
+  - Develop
+abbrlink: 2fa13cac
+date: 2019-04-15 15:10:22
 ---
 
 IntentService 是Android SDK中引入的一个非常好用的，有效的单线程后台任务工具

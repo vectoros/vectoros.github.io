@@ -1,10 +1,13 @@
 ---
 title: Numpy 函数中axis的含义
-date: 2019-03-18 15:35:21
-tags: [Python,Numpy]
+tags:
+  - Python
+  - Numpy
 categories:
-- Python
-- Numpy
+  - Python
+  - Numpy
+abbrlink: 31a06e56
+date: 2019-03-18 15:35:21
 ---
 
 Numpy中很多的基本操作函数，都有一个参数`axis`，比如：

@@ -1,11 +1,14 @@
 ---
 title: Convert Keras h5 model to TFLite model
-date: 2019-05-05 21:15:09
-tags: [Keras, TFLite]
+tags:
+  - Keras
+  - TFLite
 categories:
-- TensorFlow
-- Keras
-- Python
+  - TensorFlow
+  - Keras
+  - Python
+abbrlink: dd926e02
+date: 2019-05-05 21:15:09
 ---
 
 目前在移动端（Android）使用比较广泛的深度模型框架是TFLite，这个也是Google大力推广的。但是目前很多高效的网络都没有官方的TensorFlow版本，所以在使用的时候，我们需要将其他格式的模型，转换成TFLite格式。
