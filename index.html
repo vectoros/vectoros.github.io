@@ -337,6 +337,226 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.vectoros.club/2019/10/08/Compiler-Opencv-under-the-NDK-toolchain/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vectoros">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.webp">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Learning">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/10/08/Compiler-Opencv-under-the-NDK-toolchain/" class="post-title-link" itemprop="url">Compiler OpenCV under the NDK toolchain</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-08 10:56:00 / 修改时间：11:46:12" itemprop="dateCreated datePublished" datetime="2019-10-08T10:56:00+08:00">2019-10-08</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/NDK/" itemprop="url" rel="index"><span itemprop="name">NDK</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/NDK/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="为什么要手动编译OpenCV"><a href="#为什么要手动编译OpenCV" class="headerlink" title="为什么要手动编译OpenCV"></a>为什么要手动编译OpenCV</h2><p>正常情况下，我们利用OpenCV来开发Android应用，使用预编译的so和jar包已经足够了，但是在某些特殊情形下，我们希望自己编译OpenCV，借此来提高OpenCV的性能。</p>
+<h2 id="准备条件"><a href="#准备条件" class="headerlink" title="准备条件"></a>准备条件</h2><ol>
+<li>Ubuntu 18.04 64Bit</li>
+<li>cmake</li>
+<li><a href="https://dl.google.com/android/repository/android-ndk-r17c-linux-x86_64.zip" target="_blank" rel="noopener">NDK Reversion 17.2.4988734</a></li>
+<li><a href="https://opencv.org/releases/" target="_blank" rel="noopener">OpenCV 4.0.1</a></li>
+<li>Android API</li>
+<li>Target armeabi-v7a</li>
+</ol>
+<h2 id="下载和配置NDK"><a href="#下载和配置NDK" class="headerlink" title="下载和配置NDK"></a>下载和配置NDK</h2><ol>
+<li><p>从Google官网下载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://dl.google.com/android/repository/android-ndk-r17c-linux-x86_64.zip</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下载后解压到特定目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unzip android-ndk-r17c-linux-x86_64.zip</span><br><span class="line">mv android-ndk-r17c /opt/ndk</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="下载OpenCV源码"><a href="#下载OpenCV源码" class="headerlink" title="下载OpenCV源码"></a>下载OpenCV源码</h2><ol>
+<li><p>从官网下载最新版本或者特定版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unzip opencv.zip</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>从Github上下载</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/opencv/opencv.git opencv</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="编译OpenCV"><a href="#编译OpenCV" class="headerlink" title="编译OpenCV"></a>编译OpenCV</h2><ol>
+<li><p>创建输出目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> opencv</span><br><span class="line">$ make build</span><br><span class="line">$ <span class="built_in">cd</span> build</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置编译规则</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">cmake -DCMAKE_TOOLCHAIN_FILE=/opt/ndk/build/cmake/android.toolchain.cmake \</span><br><span class="line">-DANDROID_NDK=/opt/ndk \</span><br><span class="line">-DANDROID_NATIVE_API_LEVEL=android-<span class="number">21</span> \</span><br><span class="line">-DCMAKE_BUILD_TYPE=Release \</span><br><span class="line">-DENABLE_VFPV3=<span class="keyword">ON</span> \</span><br><span class="line">-DANDROID_ARM_NEON=<span class="keyword">TRUE</span> \</span><br><span class="line">-DENABLE_NEON=<span class="keyword">ON</span> \</span><br><span class="line">-DBUILD_PNG=<span class="keyword">ON</span> \</span><br><span class="line">-DBUILD_JASPER=<span class="keyword">ON</span> \</span><br><span class="line">-DBUILD_JPEG=<span class="keyword">ON</span> \</span><br><span class="line">-DBUILD_TIFF=<span class="keyword">ON</span> \</span><br><span class="line">-DBUILD_ZLIB=<span class="keyword">ON</span> \</span><br><span class="line">-DWITH_JPEG=<span class="keyword">ON</span> \</span><br><span class="line">-DWITH_PNG=<span class="keyword">ON</span> \</span><br><span class="line">-DWITH_JASPER=<span class="keyword">ON</span> \</span><br><span class="line">-DWITH_TIFF=<span class="keyword">ON</span> \</span><br><span class="line">-DSOFTFP=<span class="keyword">ON</span> \</span><br><span class="line">-DBUILD_JAVA=<span class="keyword">OFF</span> \</span><br><span class="line">-DBUILD_ANDROID_EXAMPLES=<span class="keyword">OFF</span> \</span><br><span class="line">-DBUILD_ANDROID_PROJECTS=<span class="keyword">OFF</span> \</span><br><span class="line">-DANDROID_STL=c++_shared \</span><br><span class="line">-DANDROID_ABI=armeabi-v7a \</span><br><span class="line">-DBUILD_SHARED_LIBS=<span class="keyword">ON</span> \</span><br><span class="line">-DCMAKE_INSTALL_PREFIX=opencv/<span class="keyword">install</span> \</span><br><span class="line">..</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编译</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make -j24 &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>检查生成文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> opencv/install/sdk</span><br><span class="line"><span class="comment"># etc 目录，存放了人脸识别模块部分资源文件，licenses等</span></span><br><span class="line">vectoros@vectoros:~/opencv/install/sdk$ ll etc/</span><br><span class="line">total 28</span><br><span class="line">drwxrwxr-x 5 vectoros vectoros 4096 Oct  8 10:50 ./</span><br><span class="line">drwxrwxr-x 4 vectoros vectoros 4096 Oct  8 10:50 ../</span><br><span class="line">drwxrwxr-x 2 vectoros vectoros 4096 Oct  8 10:50 haarcascades/</span><br><span class="line">drwxrwxr-x 2 vectoros vectoros 4096 Oct  8 10:50 lbpcascades/</span><br><span class="line">drwxrwxr-x 2 vectoros vectoros 4096 Oct  8 10:50 licenses/</span><br><span class="line">-rw-r--r-- 1 vectoros vectoros 2593 Aug 24 23:19 valgrind_3rdparty.supp</span><br><span class="line">-rw-r--r-- 1 vectoros vectoros 4088 Aug 24 23:19 valgrind.supp</span><br><span class="line"></span><br><span class="line"><span class="comment"># native/jni/include 目录，存放了对应的.h .hpp头文件</span></span><br><span class="line">vectoros@vectoros:~/opencv/install/sdk/native$ ll jni/include/</span><br><span class="line">drwxrwxr-x 16 vectoros vectoros 4096 Oct  8 10:50 opencv2/</span><br><span class="line"></span><br><span class="line"><span class="comment"># native/libs/armeabi-v7a/ 目录，存放了jni的so库或者.a文件</span></span><br><span class="line">vectoros@vectoros:~/opencv/install/sdk/native$ ll libs/armeabi-v7a/*.so</span><br><span class="line">-rw-r--r-- 1 vectoros vectoros 13462060 Oct  8 10:48 libs/armeabi-v7a/libopencv_calib3d.so</span><br><span class="line">-rw-r--r-- 1 vectoros vectoros 25141056 Oct  8 10:46 libs/armeabi-v7a/libopencv_core.so</span><br><span class="line">-rw-r--r-- 1 vectoros vectoros 50133564 Oct  8 10:47 libs/armeabi-v7a/libopencv_dnn.so</span><br><span class="line">-rw-r--r-- 1 vectoros vectoros  6983552 Oct  8 10:47 libs/armeabi-v7a/libopencv_features2d.so</span><br><span class="line">-rw-r--r-- 1 vectoros vectoros  3502996 Oct  8 10:46 libs/armeabi-v7a/libopencv_flann.so</span><br><span class="line">-rw-r--r-- 1 vectoros vectoros   525868 Oct  8 10:47 libs/armeabi-v7a/libopencv_highgui.so</span><br><span class="line">-rw-r--r-- 1 vectoros vectoros 21684136 Oct  8 10:47 libs/armeabi-v7a/libopencv_imgcodecs.so</span><br><span class="line">-rw-r--r-- 1 vectoros vectoros 26117996 Oct  8 10:46 libs/armeabi-v7a/libopencv_imgproc.so</span><br><span class="line">-rw-r--r-- 1 vectoros vectoros  6184124 Oct  8 10:46 libs/armeabi-v7a/libopencv_ml.so</span><br><span class="line">-rw-r--r-- 1 vectoros vectoros  3730776 Oct  8 10:49 libs/armeabi-v7a/libopencv_objdetect.so</span><br><span class="line">-rw-r--r-- 1 vectoros vectoros  5078460 Oct  8 10:47 libs/armeabi-v7a/libopencv_photo.so</span><br><span class="line">-rw-r--r-- 1 vectoros vectoros  7637264 Oct  8 10:49 libs/armeabi-v7a/libopencv_stitching.so</span><br><span class="line">-rw-r--r-- 1 vectoros vectoros  3361504 Oct  8 10:47 libs/armeabi-v7a/libopencv_videoio.so</span><br><span class="line">-rw-r--r-- 1 vectoros vectoros  3026088 Oct  8 10:49 libs/armeabi-v7a/libopencv_video.so</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>讲生成的文件应用到AndroidStudio NDK Projects里面</p>
+</li>
+</ol>
+<h2 id="编译配置解析"><a href="#编译配置解析" class="headerlink" title="编译配置解析"></a>编译配置解析</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">-DCMAKE_TOOLCHAIN_FILE=/opt/ndk/build/cmake/android.toolchain.cmake <span class="comment"># 指定编译工具链cmake脚本</span></span><br><span class="line">-DANDROID_NDK=/opt/ndk <span class="comment"># 指定NDK路径</span></span><br><span class="line">-DANDROID_NATIVE_API_LEVEL=android-<span class="number">21</span> <span class="comment"># 指定NDK API Level</span></span><br><span class="line">-DCMAKE_BUILD_TYPE=Release <span class="comment"># 指定编译类型，默认是Debug类型，Release会有性能上的提升</span></span><br><span class="line">-DENABLE_VFPV3=<span class="keyword">ON</span> <span class="comment"># 开启VFP优化选项</span></span><br><span class="line">-DANDROID_ARM_NEON=<span class="keyword">TRUE</span> <span class="comment"># 设置NDK支持NEON</span></span><br><span class="line">-DENABLE_NEON=<span class="keyword">ON</span> <span class="comment"># 开启O彭CV NEON优化选项</span></span><br><span class="line">-DBUILD_PNG=<span class="keyword">ON</span> <span class="comment"># 编译PNG模块</span></span><br><span class="line">-DBUILD_JASPER=<span class="keyword">ON</span> <span class="comment"># 编译JASPER模块</span></span><br><span class="line">-DBUILD_JPEG=<span class="keyword">ON</span> <span class="comment"># 编译JPEG模块</span></span><br><span class="line">-DBUILD_TIFF=<span class="keyword">ON</span> <span class="comment"># 编译TIFF模块</span></span><br><span class="line">-DBUILD_ZLIB=<span class="keyword">ON</span> <span class="comment"># 编译ZLIB模块</span></span><br><span class="line">-DWITH_JPEG=<span class="keyword">ON</span> <span class="comment"># 生成JPEG模块</span></span><br><span class="line">-DWITH_PNG=<span class="keyword">ON</span> <span class="comment"># 生成PNG模块</span></span><br><span class="line">-DWITH_JASPER=<span class="keyword">ON</span> <span class="comment"># 生成JASPER模块</span></span><br><span class="line">-DWITH_TIFF=<span class="keyword">ON</span> <span class="comment"># 生成TIFF模块</span></span><br><span class="line">-DSOFTFP=<span class="keyword">ON</span> <span class="comment"># 开启SOFTFP</span></span><br><span class="line">-DBUILD_JAVA=<span class="keyword">OFF</span> <span class="comment"># 编译Java，这里只需要C++版本，如果需要java，设置为ON</span></span><br><span class="line">-DBUILD_ANDROID_EXAMPLES=<span class="keyword">OFF</span> <span class="comment"># 编译Android Examples</span></span><br><span class="line">-DBUILD_ANDROID_PROJECTS=<span class="keyword">OFF</span> <span class="comment"># 编译Android Projects</span></span><br><span class="line">-DANDROID_STL=c++_shared <span class="comment"># 指定STL版本，新版NDK里面默认使用c++_shared</span></span><br><span class="line">-DANDROID_ABI=armeabi-v7a <span class="comment"># 指定生成ABI版本</span></span><br><span class="line">-DBUILD_SHARED_LIBS=<span class="keyword">ON</span> <span class="comment"># 是否生成共享so库，如果不设置，默认生成.a静态库</span></span><br><span class="line">-DCMAKE_INSTALL_PREFIX=opencv/<span class="keyword">install</span> <span class="comment"># 安装路径，用于生成需要的头文件和so或者.a静态库（可选）</span></span><br><span class="line">.. <span class="comment"># 指定OpenCV代码根目录（重要）</span></span><br></pre></td></tr></table></figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a href="https://www.learnopencv.com/install-opencv-on-android-tiny-and-optimized/" target="_blank" rel="noopener">https://www.learnopencv.com/install-opencv-on-android-tiny-and-optimized/</a></li>
+<li><a href="https://www.sisik.eu/blog/android/ndk/opencv-without-java" target="_blank" rel="noopener">https://www.sisik.eu/blog/android/ndk/opencv-without-java</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.vectoros.club/2019/07/02/AndroidStudio-Opencv-NDK-tutorial/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -357,7 +577,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/07/02/AndroidStudio-Opencv-NDK-tutorial/" class="post-title-link" itemprop="url">AndroidStudio Opencv NDK tutorial</a>
+                <a href="/2019/07/02/AndroidStudio-Opencv-NDK-tutorial/" class="post-title-link" itemprop="url">AndroidStudio OpenCV NDK tutorial</a>
               
             
           </h1>
@@ -399,7 +619,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-03 14:28:24" itemprop="dateModified" datetime="2019-07-03T14:28:24+08:00">2019-07-03</time>
+                <time title="修改时间：2019-10-08 11:04:10" itemprop="dateModified" datetime="2019-10-08T11:04:10+08:00">2019-10-08</time>
               
             
           </span>
@@ -417,6 +637,20 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/OpenCV/NDK/" itemprop="url" rel="index"><span itemprop="name">NDK</span></a></span>
 
                 
                 
@@ -454,18 +688,19 @@
         
           
             <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
-<li>Opencv是目前计算机视觉里面非常常用的一个开源库，支持各大平台</li>
+<li>OpenCV是目前计算机视觉里面非常常用的一个开源库，支持各大平台</li>
 </ul>
 <h2 id="准备条件"><a href="#准备条件" class="headerlink" title="准备条件"></a>准备条件</h2><ul>
 <li>AndroidStudio 最新版本</li>
 <li>SDK Manager里面安装SDK, NDK</li>
-<li>Opencv 3.4/4.0</li>
+<li>OpenCV 3.4/4.0<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://codeload.github.com/OpenCV/OpenCV/zip/3.4.6</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 <h2 id="准备知识-CMake"><a href="#准备知识-CMake" class="headerlink" title="准备知识-CMake"></a>准备知识-CMake</h2><p>AndroidStudio 支持cmake编译C/C++文件，通过编写CMakeList.txt来实现</p>
 <h3 id="常用变量"><a href="#常用变量" class="headerlink" title="常用变量"></a>常用变量</h3><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$&#123;CMAKE_SOURCE_DIR&#125; <span class="comment"># CMakeLists.txt文件所在位置</span></span><br><span class="line">$&#123;ANDROID_ABI&#125; <span class="comment"># Android ABI架构 ("armeabi-v7a","arm64-v8a")</span></span><br></pre></td></tr></table></figure>
 <h3 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h3><ul>
-<li><p>设置变量值</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set(VARIABLE, VALUE)</span><br></pre></td></tr></table></figure>
+<li><p>常用指令</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Set project</span></span><br><span class="line">project(demo)</span><br><span class="line"><span class="comment"># Set variable</span></span><br><span class="line">set(VARIABLE, VALUE)</span><br><span class="line"><span class="comment"># Show message</span></span><br><span class="line">message($&#123;ANDROID_ABI&#125;)</span><br><span class="line"><span class="comment"># if else</span></span><br><span class="line">if($&#123;ANDROID_ABI&#125; STREQUAL <span class="string">"areambi"</span>)</span><br><span class="line">    message(<span class="string">"armv5"</span>)</span><br><span class="line">elseif($&#123;ANDROID_ABI&#125; STREQUAL <span class="string">"areambi-v7a"</span>)</span><br><span class="line">    message(<span class="string">"armv7a"</span>)</span><br><span class="line">elseif($&#123;ANDROID_ABI&#125; STREQUAL <span class="string">"arm64-v8a"</span>)</span><br><span class="line">    message(<span class="string">"armv8a"</span>)</span><br><span class="line">elseif($&#123;ANDROID_ABI&#125; STREQUAL <span class="string">"x86_64"</span>)</span><br><span class="line">    message(<span class="string">"x86_64"</span>)</span><br><span class="line">elseif($&#123;ANDROID_ABI&#125; STREQUAL <span class="string">"x86"</span>)</span><br><span class="line">    message(<span class="string">"x86"</span>)</span><br><span class="line"><span class="keyword">else</span>()</span><br><span class="line">    message(<span class="string">"unknown abi"</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>添加共享库</p>
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">add_library( </span><br><span class="line"><span class="comment"># Sets the name of the library.</span></span><br><span class="line">native-lib</span><br><span class="line"><span class="comment"># Sets the library as a shared library.</span></span><br><span class="line">SHARED</span><br><span class="line"><span class="comment"># Provides a relative path to your source file(s).</span></span><br><span class="line">src/main/cpp/native-lib.cpp)</span><br></pre></td></tr></table></figure>
@@ -480,10 +715,13 @@
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Specifies libraries CMake should link to your target library. You</span></span><br><span class="line"><span class="comment"># can link multiple libraries, such as libraries you define in this</span></span><br><span class="line"><span class="comment"># build script, prebuilt third-party libraries, or system libraries.</span></span><br><span class="line"></span><br><span class="line">target_link_libraries( <span class="comment"># Specifies the target library.</span></span><br><span class="line">        test</span><br><span class="line">        <span class="comment"># Links the target library to the log library</span></span><br><span class="line">        <span class="comment"># included in the NDK.</span></span><br><span class="line">        $&#123;log-lib&#125;)</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>指定包含头文件</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/<span class="keyword">include</span>/)</span><br><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/opencv)</span><br></pre></td></tr></table></figure>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/<span class="keyword">include</span>/)</span><br><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/OpenCV)</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>手动指定共享库</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">add_library(libopencv_java3 SHARED IMPORTED)</span><br><span class="line">set_target_properties(libopencv_java3 PROPERTIES IMPORTED_LOCATION</span><br><span class="line">        $&#123;CMAKE_SOURCE_DIR&#125;/src/main/jniLibs/$&#123;ANDROID_ABI&#125;/libopencv_java3.so)</span><br></pre></td></tr></table></figure>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">add_library(libOpenCV_java3 SHARED IMPORTED)</span><br><span class="line">set_target_properties(libOpenCV_java3 PROPERTIES IMPORTED_LOCATION</span><br><span class="line">        $&#123;CMAKE_SOURCE_DIR&#125;/src/main/jniLibs/$&#123;ANDROID_ABI&#125;/libOpenCV_java3.so)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查找所有源文件，并保存到<code>IR_SRCS</code>变量，但是不能查找子目录</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aux_source_directory($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp DIR_SRCS)</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="编译器设置"><a href="#编译器设置" class="headerlink" title="编译器设置"></a>编译器设置</h3><p>我们可以在CMakeLists.txt里面设置编译器参数，也可以在build.gradle脚本里面设置</p>
@@ -496,18 +734,31 @@
 </li>
 </ul>
 <h3 id="输出设置"><a href="#输出设置" class="headerlink" title="输出设置"></a>输出设置</h3><ul>
-<li><p>动态共享库 <code>.so</code>, 会被动态链接，在运行时被加载</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/opencv)</span><br><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/<span class="keyword">include</span>/)</span><br><span class="line">add_library(libopencv_java3 SHARED IMPORTED)</span><br><span class="line">set_target_properties(libopencv_java3 PROPERTIES IMPORTED_LOCATION</span><br><span class="line">        $&#123;CMAKE_SOURCE_DIR&#125;/src/main/jniLibs/$&#123;ANDROID_ABI&#125;/libopencv_java3.so)</span><br><span class="line">find_library( <span class="comment"># Sets the name of the path variable.</span></span><br><span class="line">        log-lib</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Specifies the name of the NDK library that</span></span><br><span class="line">        <span class="comment"># you want CMake to locate.</span></span><br><span class="line">        log)</span><br><span class="line">add_library( <span class="comment"># Sets the name of the library.</span></span><br><span class="line">        native-lib</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Sets the library as a shared library.</span></span><br><span class="line">        SHARED</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Provides a relative path to your source file(s).</span></span><br><span class="line"></span><br><span class="line">        src/main/cpp/native-lib.cpp)</span><br><span class="line">target_link_libraries( <span class="comment"># Specifies the target library.</span></span><br><span class="line">        native-lib</span><br><span class="line">        libopencv_java3</span><br><span class="line">        <span class="comment"># Links the target library to the log library</span></span><br><span class="line">        <span class="comment"># included in the NDK.</span></span><br><span class="line">        $&#123;log-lib&#125;)</span><br></pre></td></tr></table></figure>
+<li><p>动态共享库 <code>.so</code></p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/OpenCV)</span><br><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/<span class="keyword">include</span>/)</span><br><span class="line">add_library(libOpenCV_java3 SHARED IMPORTED)</span><br><span class="line">set_target_properties(libOpenCV_java3 PROPERTIES IMPORTED_LOCATION</span><br><span class="line">        $&#123;CMAKE_SOURCE_DIR&#125;/src/main/jniLibs/$&#123;ANDROID_ABI&#125;/libOpenCV_java3.so)</span><br><span class="line">find_library( <span class="comment"># Sets the name of the path variable.</span></span><br><span class="line">        log-lib</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Specifies the name of the NDK library that</span></span><br><span class="line">        <span class="comment"># you want CMake to locate.</span></span><br><span class="line">        log)</span><br><span class="line">add_library( <span class="comment"># Sets the name of the library.</span></span><br><span class="line">        native-lib</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Sets the library as a shared library.</span></span><br><span class="line">        SHARED</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Provides a relative path to your source file(s).</span></span><br><span class="line"></span><br><span class="line">        src/main/cpp/native-lib.cpp)</span><br><span class="line">target_link_libraries( <span class="comment"># Specifies the target library.</span></span><br><span class="line">        native-lib</span><br><span class="line">        libOpenCV_java3</span><br><span class="line">        <span class="comment"># Links the target library to the log library</span></span><br><span class="line">        <span class="comment"># included in the NDK.</span></span><br><span class="line">        $&#123;log-lib&#125;)</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>静态共享库 <code>.a</code>, 是目标文件的归档文件，在链接其它目标的时候使用</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/opencv)</span><br><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/<span class="keyword">include</span>/)</span><br><span class="line">add_library(libopencv_java3 SHARED IMPORTED)</span><br><span class="line">set_target_properties(libopencv_java3 PROPERTIES IMPORTED_LOCATION</span><br><span class="line">        $&#123;CMAKE_SOURCE_DIR&#125;/src/main/jniLibs/$&#123;ANDROID_ABI&#125;/libopencv_java3.so)</span><br><span class="line">find_library( <span class="comment"># Sets the name of the path variable.</span></span><br><span class="line">        log-lib</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Specifies the name of the NDK library that</span></span><br><span class="line">        <span class="comment"># you want CMake to locate.</span></span><br><span class="line">        log)</span><br><span class="line">add_library( <span class="comment"># Sets the name of the library.</span></span><br><span class="line">        native-lib</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Sets the library as a static library.</span></span><br><span class="line">        STATIC</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Provides a relative path to your source file(s).</span></span><br><span class="line"></span><br><span class="line">        src/main/cpp/native-lib.cpp)</span><br><span class="line">target_link_libraries( <span class="comment"># Specifies the target library.</span></span><br><span class="line">        native-lib</span><br><span class="line">        libopencv_java3</span><br><span class="line">        <span class="comment"># Links the target library to the log library</span></span><br><span class="line">        <span class="comment"># included in the NDK.</span></span><br><span class="line">        $&#123;log-lib&#125;)</span><br></pre></td></tr></table></figure>
+<li><p>静态共享库 <code>.a</code></p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/OpenCV)</span><br><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/<span class="keyword">include</span>/)</span><br><span class="line">add_library(libOpenCV_java3 SHARED IMPORTED)</span><br><span class="line">set_target_properties(libOpenCV_java3 PROPERTIES IMPORTED_LOCATION</span><br><span class="line">        $&#123;CMAKE_SOURCE_DIR&#125;/src/main/jniLibs/$&#123;ANDROID_ABI&#125;/libOpenCV_java3.so)</span><br><span class="line">find_library( <span class="comment"># Sets the name of the path variable.</span></span><br><span class="line">        log-lib</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Specifies the name of the NDK library that</span></span><br><span class="line">        <span class="comment"># you want CMake to locate.</span></span><br><span class="line">        log)</span><br><span class="line">add_library( <span class="comment"># Sets the name of the library.</span></span><br><span class="line">        native-lib</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Sets the library as a static library.</span></span><br><span class="line">        STATIC</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Provides a relative path to your source file(s).</span></span><br><span class="line"></span><br><span class="line">        src/main/cpp/native-lib.cpp)</span><br><span class="line">target_link_libraries( <span class="comment"># Specifies the target library.</span></span><br><span class="line">        native-lib</span><br><span class="line">        libOpenCV_java3</span><br><span class="line">        <span class="comment"># Links the target library to the log library</span></span><br><span class="line">        <span class="comment"># included in the NDK.</span></span><br><span class="line">        $&#123;log-lib&#125;)</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>模块库，是不会被链接到其它目标中的插件，但是可能会在运行时使用dlopen-系列的函数动态链接</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line"></span><br><span class="line">* Executable</span><br><span class="line">```makefile</span><br><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/opencv)</span><br><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/include/)</span><br><span class="line">add_library(libopencv_java3 SHARED IMPORTED)</span><br><span class="line">set_target_properties(libopencv_java3 PROPERTIES IMPORTED_LOCATION</span><br><span class="line">        $&#123;CMAKE_SOURCE_DIR&#125;/src/main/jniLibs/$&#123;ANDROID_ABI&#125;/libopencv_java3.so)</span><br><span class="line">find_library( # Sets the name of the path variable.</span><br><span class="line">        log-lib</span><br><span class="line"></span><br><span class="line">        # Specifies the name of the NDK library that</span><br><span class="line">        # you want CMake to locate.</span><br><span class="line">        log)</span><br><span class="line"># 设置可执行文件的输出目录</span><br><span class="line">set(EXECUTABLE_OUTPUT_PATH      &quot;$&#123;CMAKE_SOURCE_DIR&#125;/src/main/assets/$&#123;ANDROID_ABI&#125;&quot;)</span><br><span class="line"># 添加可执行文件的源文件</span><br><span class="line">add_executable(</span><br><span class="line">        test</span><br><span class="line"></span><br><span class="line">        src/main/cpp/main.cpp</span><br><span class="line">)</span><br><span class="line">target_link_libraries( # Specifies the target library.</span><br><span class="line">        test</span><br><span class="line">        libopencv_java3</span><br><span class="line">        # Links the target library to the log library</span><br><span class="line">        # included in the NDK.</span><br><span class="line">        $&#123;log-lib&#125;)</span><br></pre></td></tr></table></figure>
+<li><p>Executable</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/OpenCV)</span><br><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/<span class="keyword">include</span>/)</span><br><span class="line">add_library(libOpenCV_java3 SHARED IMPORTED)</span><br><span class="line">set_target_properties(libOpenCV_java3 PROPERTIES IMPORTED_LOCATION</span><br><span class="line">        $&#123;CMAKE_SOURCE_DIR&#125;/src/main/jniLibs/$&#123;ANDROID_ABI&#125;/libOpenCV_java3.so)</span><br><span class="line">find_library( <span class="comment"># Sets the name of the path variable.</span></span><br><span class="line">        log-lib</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Specifies the name of the NDK library that</span></span><br><span class="line">        <span class="comment"># you want CMake to locate.</span></span><br><span class="line">        log)</span><br><span class="line"><span class="comment"># 设置可执行文件的输出目录</span></span><br><span class="line">set(EXECUTABLE_OUTPUT_PATH      <span class="string">"$&#123;CMAKE_SOURCE_DIR&#125;/src/main/assets/$&#123;ANDROID_ABI&#125;"</span>)</span><br><span class="line"><span class="comment"># 添加可执行文件的源文件</span></span><br><span class="line">add_executable(</span><br><span class="line">        test</span><br><span class="line"></span><br><span class="line">        src/main/cpp/main.cpp</span><br><span class="line">)</span><br><span class="line">target_link_libraries( <span class="comment"># Specifies the target library.</span></span><br><span class="line">        test</span><br><span class="line">        libOpenCV_java3</span><br><span class="line">        <span class="comment"># Links the target library to the log library</span></span><br><span class="line">        <span class="comment"># included in the NDK.</span></span><br><span class="line">        $&#123;log-lib&#125;)</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="依赖设置"><a href="#依赖设置" class="headerlink" title="依赖设置"></a>依赖设置</h3><h3 id="与Gradle结合"><a href="#与Gradle结合" class="headerlink" title="与Gradle结合"></a>与Gradle结合</h3><h2 id="新建Project"><a href="#新建Project" class="headerlink" title="新建Project"></a>新建Project</h2><p>用AndroidStudio创建项目，并选择Native C++支持</p>
-<h2 id="导入opencv头文件"><a href="#导入opencv头文件" class="headerlink" title="导入opencv头文件"></a>导入opencv头文件</h2><h2 id="导入opencv-so库"><a href="#导入opencv-so库" class="headerlink" title="导入opencv so库"></a>导入opencv so库</h2><h2 id="编译验证"><a href="#编译验证" class="headerlink" title="编译验证"></a>编译验证</h2>
+<h2 id="导入OpenCV头文件"><a href="#导入OpenCV头文件" class="headerlink" title="导入OpenCV头文件"></a>导入OpenCV头文件</h2><ol>
+<li>在<code>src/main/cpp</code>目录下创建<code>include</code>目录</li>
+<li>将OpenCV SDK解压后，<code>sdk/native/jni/include/</code>目录下的两个头文件文件夹<code>OpenCV, OpenCV2</code>复制到上面创建的<code>include</code>目录下</li>
+<li>CMakeList.txt添加对应引用<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">include_directories($&#123;CMAKE_SOURCE_DIR&#125;/src/main/cpp/include/)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="导入OpenCV-so库"><a href="#导入OpenCV-so库" class="headerlink" title="导入OpenCV so库"></a>导入OpenCV so库</h2><ol>
+<li>创建<code>src/main/jniLibs</code>目录，用于存放第三方共享库</li>
+<li>将OpenCV SDK解压后，<code>sdk/native/libs/</code>目录下的<code>so</code>文件文件夹复制到上面创建的<code>jniLibs</code>目录下，这些文件夹是以<code>abi</code>为目录保存的。</li>
+<li>CMakeList.txt添加对应依赖<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">add_library(libOpenCV_java3 SHARED IMPORTED)</span><br><span class="line">set_target_properties(libOpenCV_java3 PROPERTIES IMPORTED_LOCATION</span><br><span class="line">        $&#123;CMAKE_SOURCE_DIR&#125;/src/main/jniLibs/$&#123;ANDROID_ABI&#125;/libOpenCV_java3.so)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="jni引用OpenCV方法"><a href="#jni引用OpenCV方法" class="headerlink" title="jni引用OpenCV方法"></a>jni引用OpenCV方法</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"OpenCV2/core.hpp"</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br></pre></td></tr></table></figure>
+<h2 id="编译验证"><a href="#编译验证" class="headerlink" title="编译验证"></a>编译验证</h2>
           
         
       
@@ -2198,212 +2449,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.vectoros.club/2019/03/09/AndroidStudio-Gradle-全局参数配置/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Vectoros">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.webp">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Keep Learning">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/03/09/AndroidStudio-Gradle-全局参数配置/" class="post-title-link" itemprop="url">AndroidStudio Gradle 全局参数配置</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-03-09 13:18:36" itemprop="dateCreated datePublished" datetime="2019-03-09T13:18:36+08:00">2019-03-09</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-03-15 15:04:47" itemprop="dateModified" datetime="2019-03-15T15:04:47+08:00">2019-03-15</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="先提出以下两个问题"><a href="#先提出以下两个问题" class="headerlink" title="先提出以下两个问题"></a>先提出以下两个问题</h2><ul>
-<li><strong>在开发Android应用时，如何将配置参数应用到所有的AndroidStudio项目中？</strong></li>
-<li><strong>有些敏感信息我们不希望包含在工程中，跟随代码提交，比如签名相关信息。</strong></li>
-</ul>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>我们可以利用Gradle的全局配置文件，为我们所有的项目配置相关参数，解决以上两个问题。</p>
-<ul>
-<li>Windows平台在 <code>C:\Users\user\.gradle</code> 目录下</li>
-<li>Linux平台在 <code>/home/user/.gradle</code> 目录下</li>
-<li>Mac平台类似，找到<code>gradle</code>的目录即可</li>
-</ul>
-<h3 id="下面以配置签名信息为例："><a href="#下面以配置签名信息为例：" class="headerlink" title="下面以配置签名信息为例："></a>下面以配置签名信息为例：</h3><ol>
-<li>打开<code>gradle.properties</code>文件，在文件末尾增加如下信息：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">KEYSTOREFILE=../../keystore/android.keystore</span><br><span class="line">KEYALIAS=release</span><br><span class="line">KEYPASSWORD=helloworld</span><br><span class="line">STOREPASSWORD=helloworld</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ul>
-<li><strong>注意</strong><ul>
-<li>这里的配置信息是没有<code>&quot;&quot;</code>双引号的，有引号会导致异常。</li>
-<li><code>KEYSOTREFILE</code>使用的是相对目录，相对于<code>app/build.gradle</code>文件所在的目录。</li>
-<li>比如我这个文件就位于和工程文件夹相同级别的目录<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">MyProject/app/build.gradle</span><br><span class="line">MyProject1/app/build.gradle</span><br><span class="line">MyProject2/app/build.gradle</span><br><span class="line">MyProject3/app/build.gradle</span><br><span class="line">keystore/android.keystore</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<ol start="2">
-<li><p>在到对应的工程下面，打开app/build.gradle</p>
-<ul>
-<li>增加signingConfigs</li>
-<li>在buildTypes release里面增加signConfig配置<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion 28</span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        applicationId &quot;com.example.test&quot;</span><br><span class="line">        minSdkVersion 21</span><br><span class="line">        targetSdkVersion 28</span><br><span class="line">        versionCode 1</span><br><span class="line">        versionName &quot;1.0&quot;</span><br><span class="line">        testInstrumentationRunner &quot;androidx.test.runner.AndroidJUnitRunner&quot;</span><br><span class="line">    &#125;</span><br><span class="line">    // 增加签名配置</span><br><span class="line">    signingConfigs&#123;</span><br><span class="line">        releaseConfig&#123;</span><br><span class="line">            keyAlias KEYALIAS //引用刚才配置的参数</span><br><span class="line">            keyPassword KEYPASSWORD</span><br><span class="line">            storePassword STOREPASSWORD</span><br><span class="line">            storeFile file(KEYSTOREFILE)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        release &#123;</span><br><span class="line">            signingConfig signingConfigs.releaseConfig //引用配置文件</span><br><span class="line">            minifyEnabled false</span><br><span class="line">            proguardFiles getDefaultProguardFile(&apos;proguard-android.txt&apos;), &apos;proguard-rules.pro&apos;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>这样配置后，即使代码提交了，也不会将签名信息提交，其他开发者把代码拉下来后，只需要到<code>gradle.properties</code>里面配置好对应的参数即可。其他全局配置也可以这么操作。</p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2452,7 +2497,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2501,7 +2546,15 @@
                     
                       
                     
-                    <span class="site-state-item-count">18</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">22</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -2544,7 +2597,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">15</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
