@@ -8,7 +8,8 @@ subtitle:
 description:
 keywords: Android, Deep Learning, Tensorflow
 author: Vectoros
-language: zh-Hans
+# language: zh-Hans # For next5
+language: zh-CN # For next7
 timezone:
 
 # URL
@@ -91,7 +92,7 @@ sitemap:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: next
+theme: next7
 
 # Hexo-neat compress
 neat_enable: true
@@ -106,7 +107,7 @@ neat_css:
     - '**/*.min.css'
 # 压缩js
 neat_js:
-  enable: true
+  enable: false
   mangle: true
   output:
   compress:
@@ -114,30 +115,6 @@ neat_js:
     - '**/*.min.js'
     - '**/jquery.fancybox.pack.js'
     - '**/index.js'
-
-gitment:
-  enable: false # 是否开启gitment评论系统
-  # mint: true #
-  count: true # 是否显示评论数
-  lazy: false # 懒加载，设置为ture时需手动展开评论
-  cleanly: true # 是否隐藏'Powered by ...'
-  language: # 语言，置空则随主题的语言
-  github_user: vectoros # Github用户名
-  github_repo: githubpagescomment # 在Github新建一个仓库用于存放评论，这是仓库名
-  client_id: ad65e236934834eb5e57 # 注册OAuth Application时生成
-  client_secret: 69da8ff1986c5547d5956daf47b75b2c95dc9e4f # 注册OAuth Application时生成
-  proxy_gateway: # Address of api proxy, See: https://github.com/aimingoo/intersect
-  redirect_protocol: # Protocol of redirect_uri with force_redirect_protocol when mint enabled
-
-
-gitalk:
-  enable: true
-  githubID: vectoros	 
-  repo: githubpagescomment
-  ClientID: ad65e236934834eb5e57
-  ClientSecret: 69da8ff1986c5547d5956daf47b75b2c95dc9e4f
-  adminUser: vectoros #指定可初始化评论账户
-  distractionFreeMode: true
 
 
 # Deployment
