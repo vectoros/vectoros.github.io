@@ -187,6 +187,147 @@ ls -l
   通过以上的编译脚本，我们知道了自己需要写哪些文件，会生成什么样的文件，接下来就可以往下写实现部分的代码了。
 
 ## 头文件实现
+* 主要有三个头文件
+    - LEDService.h
+    - LEDServiceManager.h
+    - ILEDService.h
+
+* ILEDService.h
+```cpp
+#ifndef ANDROID_ILED_NATIVE_SERVICE_H
+#define ANDROID_ILED_NATIVE_SERVICE_H
+
+#include <stdint.h>
+#include <sys/types.h>
+
+
+#include <utils/RefBase.h>
+#include <utils/Singleton.h>
+#include <utils/Errors.h>
+#include <utils/String16.h>
+
+#include <binder/IInterface.h>
+
+namespace android
+{
+
+    class ILEDService : public IInterface
+    {
+        public:
+            DECLARE_META_INTERFACE(LEDService);
+
+            virtual int initHardware(void) = 0;
+            virtual void releaseHardware(void) = 0;
+            virtual void on(void) = 0;
+            virtual void off(void) = 0;
+    };
+
+    class BnLEDService : public BnInterface<ILEDService>{
+        public:
+            virtual status_t onTransact(uint32_t code, const Parcel& data,
+                 Parcel* reply, uint32_t flags = 0);
+    };
+
+    enum LED_SERVICE_TYPE{
+        BASE_START,
+        ON,
+        OFF,
+    };
+    
+} // namespace android
+#endif //ANDROID_ILED_NATIVE_SERVICE_H
+```
+
+* LEDService.h
+```cpp
+#ifndef ANDROID_LED_NATIVE_SERVICE_H
+#define ANDROID_LED_NATIVE_SERVICE_H
+
+#include <map>
+#include <stdint.h>
+#include <sys/types.h>
+
+#include <cutils/compiler.h>
+
+#include <utils/Atomic.h>
+#include <utils/Errors.h>
+#include <utils/KeyedVector.h>
+#include <utils/RefBase.h>
+#include <utils/SortedVector.h>
+#include <utils/threads.h>
+
+#include <binder/BinderService.h>
+
+#include "ILEDService.h"
+
+
+namespace android {
+
+    class LEDService : public BinderService<LEDService>, public BnLEDService
+    {
+    public:
+        static char const* getServiceName() {
+            return "LEDService";
+        }
+
+        LEDService();
+        ~LEDService();
+
+    private:
+        virtual int initHardware(void);
+        virtual void releaseHardware(void);
+        virtual void on(void);
+        virtual void off(void);
+    };
+}; // namespace android
+
+#endif // ANDROID_LED_NATIVE_SERVICE_H
+```
+
+* LEDServiceManager.h
+```cpp
+#ifndef ANDROID_LED_NATIVE_MANAGER_H
+#define ANDROID_LED_NATIVE_MANAGER_H
+
+#include <stdint.h>
+#include <sys/types.h>
+
+#include <binder/IBinder.h>
+
+#include <utils/RefBase.h>
+#include <utils/Singleton.h>
+#include <utils/threads.h>
+
+#include "ILEDService.h"
+
+namespace android
+{
+    class LEDServiceManager : public Singleton<LEDServiceManager>
+    {
+    private:
+        /* data */
+        bool isDied;
+        void ledServiceDied();
+
+        mutable sp<ILEDService> mLEDService;
+        mutable sp<IBinder::DeathRecipient> mDeathObserver;
+
+    public:
+        LEDServiceManager(/* args */);
+        ~LEDServiceManager();
+
+        int initHardware(void);
+        void releaseHardware(void);
+        void on(void);
+        void off(void);
+
+        status_t assertState();
+        bool checkService() const;
+        void resetServiceStatus();
+    };
+} // namespace android
+#endif //ANDROID_LED_NATIVE_MANAGER_H
+```
 
 ## 客户端和服务端实现
 
