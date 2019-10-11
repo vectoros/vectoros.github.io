@@ -5,7 +5,7 @@ tags:
   - Keystore
   - AndroidStudio
 categories:
-  - Andorid
+  - Android
 abbrlink: a94712d2
 date: 2019-03-29 20:37:26
 ---

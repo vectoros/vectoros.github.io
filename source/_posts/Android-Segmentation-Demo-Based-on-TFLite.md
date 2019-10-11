@@ -1,7 +1,12 @@
 ---
 title: Android Segmentation Demo Based on TFLite
-tags: 'Android, TFlite, Segmentation'
-categories: 'Android, TensorFlow'
+tags: 
+  - Android
+  - TFlite
+  - Segmentation
+categories: 
+  - Android
+  - TensorFlow
 abbrlink: 1ce7ae9a
 date: 2019-03-24 15:10:26
 ---
