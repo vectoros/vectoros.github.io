@@ -4,9 +4,9 @@ tags:
   - Keras
   - TFLite
 categories:
+  - Python
   - TensorFlow
   - Keras
-  - Python
 abbrlink: dd926e02
 date: 2019-05-05 21:15:09
 ---

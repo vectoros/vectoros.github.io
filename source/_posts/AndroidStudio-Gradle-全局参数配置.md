@@ -6,6 +6,8 @@ tags:
   - Tutorial
 categories:
   - Android
+  - AndroidStudio
+  - Gradle
 abbrlink: 66cda814
 date: 2019-03-09 13:18:36
 ---

@@ -6,7 +6,8 @@ tags:
   - Segmentation
 categories: 
   - Android
-  - TensorFlow
+  - Application
+  - TFLite
 abbrlink: 1ce7ae9a
 date: 2019-03-24 15:10:26
 ---

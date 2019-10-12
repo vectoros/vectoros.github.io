@@ -1,12 +1,12 @@
 ---
 title: Build Tensorflow Lite benchmark for Android
 tags:
-  - TFLite
   - Android
+  - TFLite
 categories:
+  - Android
   - Tensorflow
   - TFLite
-  - Android
   - Benchmark
 abbrlink: 1b1cf1e2
 date: 2019-06-15 16:42:50

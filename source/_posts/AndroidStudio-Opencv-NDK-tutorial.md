@@ -6,8 +6,8 @@ tags:
   - Tutorial
 categories:
   - Android
-  - OpenCV
   - NDK
+  - OpenCV
 abbrlink: dd932aba
 date: 2019-07-02 21:47:09
 ---

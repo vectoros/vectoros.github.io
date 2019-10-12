@@ -5,7 +5,8 @@ tags:
   - Background Tasks
 categories:
   - Android
-  - Develop
+  - Application
+  - Service
 abbrlink: 9dbfc6f1
 date: 2019-04-15 15:14:26
 ---

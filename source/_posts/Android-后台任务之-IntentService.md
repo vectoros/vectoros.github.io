@@ -6,7 +6,8 @@ tags:
   - IntentService
 categories:
   - Android
-  - Develop
+  - Application
+  - Service
 abbrlink: 2fa13cac
 date: 2019-04-15 15:10:22
 ---
