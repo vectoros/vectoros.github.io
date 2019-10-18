@@ -231,11 +231,68 @@ description:
 ## 常用的JNI方法
 
 * jclass获取jobject
+```cpp
+jmethod methodId = env->GetMethodID(classz, "<init>", "()V");
+jobject jobj = env->NewObject(classz, methodId);
+```
 * jobject获取jclass
+```cpp
+jclass classz = env->GetObjectClass(thiz);
+```
 * 获取object的非静态字段
+```cpp
+// 获取jclass，静态方法则不需要这步
+jclass classz = env->GetObjectClass(thiz);
+// 获取field id，
+jfieldID fid = env->GetFieldID(classz, "mName", "Ljava/lang/String;");
+// 获取field 值
+jstring mName = env->GetObjectField(thiz, fid);
+// 设置值
+std::string name = "myname";
+env->SetObjectField(thiz, fid, env->NewStringUTF(name.c_str()))
+```
 * 获取class的静态字段
+```cpp
+// 获取jclass，静态方法则不需要这步
+jclass classz = env->GetObjectClass(thiz);
+// 获取field id，
+jfieldID fid = env->GetStaticFieldID(classz, "sName", "Ljava/lang/String;");
+// 获取field 值
+jstring mName = env->GetStaticObjectField(thiz, fid);
+// 设置值
+std::string name = "myname";
+env->SetStaticObjectField(thiz, fid, env->NewStringUTF(name.c_str()))
+```
 * 获取class的非静态方法
+```cpp
+// 获取jclass，静态方法则不需要这步
+jclass classz = env->GetObjectClass(thiz);
+// 获取method id，
+jmethodID methodId = env->GetMethodID(classz, "getName", "()Ljava/lang/String;");
+// 调用java方法
+jstring name = env->CallObjectMethod(thiz, methodId)
+```
 * 获取class的静态方法
+```cpp
+// 获取jclass，静态方法则不需要这步
+jclass classz = env->GetObjectClass(thiz);
+// 获取method id，
+jmethodID methodId = env->GetStaticMethodID(classz, "getCount", "()I");
+// 调用java方法
+jint count = env->CallStaticIntMethod(thiz, methodId)
+```
 * 访问构造方法
+```cpp
+// 获取jclass，静态方法则不需要这步
+jclass classz = env->FindClass("java/util/Date");
+jmethod methodId = env->GetMethodID(classz, "<init>", "()V");
+// 实例化对象
+jobject date = env->NewObject(classz, methodId);
+// 获取调用方法ID
+jmethod getTimeId = env->GetMethodID(classz, "getTime", "()J");
+// 调用方法
+jlong time = env->CallLongMethod(date, getTimeId);
+std::out<<"current time: " << time <<endl;
+```
 
 
