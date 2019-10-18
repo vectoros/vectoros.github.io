@@ -79,6 +79,77 @@ description:
 ## 动态注册
 动态注册需要写的代码会多一些，我们可以参考Framework的很多JNI接口的实现。Java层的代码不需要变化，CMake也不需要修改（如果有引入其他头文件，需要在CMake里面增加对应的库）
 
+* JNINativeMethod
+动态注册过程中，需要使用结构体JNINativeMethod来记录java方法和jni函数的对应关系
+    ```c
+    typedef struct {
+        const char* name; //Java方法名
+        const char* signature; //方法的参数和返回值，使用字符串记录，格式形如`()V, (I)I`，括号内表示函数参数，括号右侧表示函数返回值
+        void*       fnPtr; // 指向JNI函数的函数指针
+    } JNINativeMethod;
+    ```
+
+* 数据类型映射
+    - 基本数据类型
+        Java类型 | Native类型 | 域描述符 | 补充
+        -|-|-|-
+        boolean | jboolean | Z |
+        byte    | jbyte    | B |
+        char    | jchar    | C |
+        short   | jshort   | S |
+        int     | jint     | I |
+        long    | jlong    | J |
+        float   | jfloat   | F |
+        double  | jdouble  | D |
+        void    | void     | V |
+
+    - 数组引用类型
+        Java类型 | Native类型 | 域描述符 | 补充
+        -|-|-|-
+        boolean[] | jbooleanArray | [Z |
+        byte[]    | jbyteArray    | [B |
+        char[]    | jcharArray    | [C |
+        short[]   | jshortArray   | [S |
+        int[]     | jintArray     | [I |
+        long[]    | jlongArray    | [J |
+        float[]   | jfloatArray   | [F |
+        double[]  | jdoubleArray  | [D |
+    - 对象引用类型
+        Java类型 | Native类型 | 域描述符 | 补充
+        -|-|-|-
+        Class | jobject | Lcom.example.Class; | 以`"L"`开头，以`";"`结尾，内部类使用`"$"`连接，String除外
+        String | jstring | Ljava/lang/String; | 唯一的例外
+    - 对象数组引用类型
+        Java类型 | Native类型 | 域描述符 | 补充
+        -|-|-|-
+        Class | jobject | [Lcom.example.Class; | 以`"[L"`开头，以`";"`结尾，内部类使用`"$"`连接，String除外
+        String | jstring | [Ljava/lang/String; | 唯一的例外
+
+* JNI函数默认参数
+
+    - native方法默认参数
+        普通的native方法，是Java类的成员方法，默认的参数有以下两个
+        ```
+        JNIEnv *env, jobject thiz
+        ```
+        * `JNIEnv *env`
+
+            指代当前的java环境，可以利用JNIEnv操作Java层代码
+        * `jobject thiz`
+
+            指代JNI函数对应的java native方法对应的类的实例
+    - static native方法默认参数
+        static native方法，是Java类的static方法，默认的参数有以下两个
+        ```
+        JNIEnv *env, jclass classz
+        ```
+        * `JNIEnv *env`
+
+            指代当前的java环境，可以利用JNIEnv操作Java层代码
+        * `jclass classz`
+        
+            指代JNI函数对应的java static native方法对应的class对象
+
 * native-lib.cpp
     ```cpp
     #include <jni.h>
@@ -88,7 +159,7 @@ description:
     #define JNIREG_CLASS "com/example/MainActivity"
 
     // Native方法实现
-    static jstring stringFromJNI(JNIEnv *env, jobject obj)
+    static jstring stringFromJNI(JNIEnv *env, jclass classz)
     {
         std::string hello = "Hello from C++";
         return env->NewStringUTF(hello.c_str());
@@ -142,6 +213,29 @@ description:
 
 ## 两种注册方法的对比
 
-## native方法
+注册方法 | 优点 | 缺点
+-|-|-
+静态注册 | 支持自动生成的IDE，可以比较方便的编写代码 | 在没有IDE自动生成的情况下，编写不方便 |
+静态注册 |  | 程序运行效率低，每次调用native函数时，需要根据函数名在JNI层搜索对应的本地函数，建立对应关系，比较耗时 |
+动态注册 | Native层方法和Java层实现简单的代码分离，降低耦合度 | 需要手动实现注册方法 |
+动态注册 | 大量的Native方法，注册起来更加方便 |  |
 
-## static native方法
+
+## native方法和static native方法的区别
+
+在上面的默认参数一节中，我们已经提到了关于native方法和static native方法的一些区别
+
+* 静态注册时，IDE帮我们生成对应的方法，我们可以省去编写函数签名的操作。
+* 动态注册时，函数签名需要我们自己编写，就需要知道native方法和static native方法的一些区别和差异，才能使得我们的函数能够正常运行。
+
+## 常用的JNI方法
+
+* jclass获取jobject
+* jobject获取jclass
+* 获取object的非静态字段
+* 获取class的静态字段
+* 获取class的非静态方法
+* 获取class的静态方法
+* 访问构造方法
+
+
