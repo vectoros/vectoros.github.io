@@ -331,6 +331,328 @@ namespace android
 
 ## 客户端和服务端实现
 
+* ILEDService.cpp
+```cpp
+#include <stdio.h>
+#include <stdint.h>
+#include <malloc.h>
+#include <sys/types.h>
+
+#include <binder/Parcel.h>
+#include <binder/IMemory.h>
+#include <binder/IPCThreadState.h>
+#include <binder/IServiceManager.h>
+#include "ILEDService.h"
+
+#ifdef __ANDROID__
+#define LOG_TAG "ILEDService"
+#if ANDROID_API_LEVEL >= 26
+#include <log/log.h>
+#else
+#include <cutils/log.h>
+#endif
+#endif
+
+namespace android
+{
+    enum{
+        INIT_HARDWARE = IBinder::FIRST_CALL_TRANSACTION,
+        RELEASE_HARDWARE,
+        ON,
+        OFF,
+    };
+
+
+    class BpLEDService : public BpInterface<ILEDService>
+    {
+        public:
+            BpLEDService(const sp<IBinder>& impl) : BpInterface<ILEDService>(impl)
+            {
+
+            }
+
+            int initHardware(void)
+            {
+                Parcel data, reply;
+                data.writeInterfaceToken(ILEDService::getInterfaceDescriptor());
+                remote()->transact(INIT_HARDWARE, data, &reply);
+                return (int)reply.readInt32();
+            }
+
+            void releaseHardware(void)
+            {
+                Parcel data, reply;
+                data.writeInterfaceToken(ILEDService::getInterfaceDescriptor());
+                remote()->transact(RELEASE_HARDWARE, data, &reply);
+            }
+
+            int on(void)
+            {
+                Parcel data, reply;
+                data.writeInterfaceToken(ILEDService::getInterfaceDescriptor());
+                remote()->transact(ON, data, &reply);
+                return (int) reply.readInt32();
+            }
+
+            int off(void)
+            {
+                Parcel data, reply;
+                data.writeInterfaceToken(ILEDService::getInterfaceDescriptor());
+                remote()->transact(OFF, data, &reply);
+                return (int) reply.readInt32();
+            }
+    };
+
+    IMPLEMENT_META_INTERFACE(LEDService, "android.vectoros.LEDService");
+
+    status_t BnLEDService::onTransact(uint32_t code, const Parcel& data, Parcel* reply, uint32_t flags)
+    {
+        char *buff;
+        int len, retval;
+        status_t status;
+    
+        switch(code) {
+            case INIT_HARDWARE:{
+                CHECK_INTERFACE(ILEDService, data, reply);
+                retval = initHardware();
+                reply->writeInt32(retval); 
+                return NO_ERROR;
+            } break;
+                
+    
+            case RELEASE_HARDWARE:{
+                CHECK_INTERFACE(ILEDService, data, reply); 
+                releaseHardware();
+                return NO_ERROR;
+            } break;
+
+            case ON:{
+                CHECK_INTERFACE(ILEDService, data, reply);
+                on();
+                return NO_ERROR;
+            } break;
+                
+            case OFF:{
+                CHECK_INTERFACE(ILEDService, data, reply);
+                off();
+                return NO_ERROR;
+            } break;
+
+            default:
+              return BBinder::onTransact(code, data, reply, flags);
+        }
+    }
+} // namespace android
+```
+* LEDService.cpp
+```cpp
+#include <stdint.h>
+#include <stdio.h>
+#include <math.h>
+#include <sys/types.h>
+
+#include <utils/Errors.h>
+#include <utils/RefBase.h>
+#include <utils/Singleton.h>
+#include <utils/String16.h>
+
+#include <binder/BinderService.h>
+#include <binder/IServiceManager.h>
+
+#include "LEDService.h"
+
+#define BUFFER_SIZE 512
+#ifdef __ANDROID__
+#define LOG_TAG "LEDService"
+#if ANDROID_API_LEVEL >= 26
+#include <log/log.h>
+#else
+#include <cutils/log.h>
+#endif
+#endif
+
+namespace android {
+
+LEDService::LEDService()
+{
+    ALOGI("LEDService()"); 
+}
+
+LEDService::~LEDService(){
+    ALOGI("~LEDService()");
+}
+
+int LEDService::initHardware(void)
+{
+    ALOGI("initHardware(), check camera env.");
+}
+
+void LEDService::releaseHardware(void)
+{
+    ALOGI("releaseHardware()");
+}
+
+int LEDService::on(void)
+{
+    ALOGI("on()");
+    return 0;
+}
+
+int LEDService::off(void)
+{
+    ALOGI("off()");
+    return 0;
+}
+
+}; // namespace android
+
+```
+* LEDServiceManager.cpp
+```cpp
+#include <stdint.h>
+#include <sys/types.h>
+
+#include <utils/Errors.h>
+#include <utils/RefBase.h>
+#include <utils/Singleton.h>
+
+#ifdef __ANDROID__
+#define LOG_TAG "LEDServiceManager"
+#if ANDROID_API_LEVEL >= 26
+#include <log/log.h>
+#else
+#include <cutils/log.h>
+#endif
+#endif
+
+#include <binder/IBinder.h>
+#include <binder/IServiceManager.h>
+
+#include "ILEDService.h"
+#include "LEDServiceManager.h"
+
+namespace android
+{
+    LEDServiceManager::LEDServiceManager() : isDied(false)
+    {
+
+    }
+
+    LEDServiceManager::~LEDServiceManager()
+    {
+
+    }
+
+    void LEDServiceManager::LEDServiceDied()
+    {
+        isDied = true;
+        mLEDService.clear();
+    }
+
+    status_t LEDServiceManager::assertState() {
+        if (mLEDService == NULL) {
+            // try for one second
+            const String16 name("LEDService");
+            for (int i=0 ; i<4 ; i++) {
+                status_t err = getService(name, &mLEDService);
+                if (err == NAME_NOT_FOUND) {
+                    usleep(250000);
+                    continue;
+                }
+                if (err != NO_ERROR) {
+                    ALOGE("LEDService not found");
+                    return err;
+                }
+                break;
+            }
+            
+            initLEDServiceNative();
+    
+    
+            class DeathObserver : public IBinder::DeathRecipient {
+                LEDServiceManager& mLEDServiceManager;
+                virtual void binderDied(const wp<IBinder>& who) {
+                    ALOGW("LEDService died [%p]", who.unsafe_get());
+                    mLEDServiceManager.LEDServiceDied();
+                }
+            public:
+                DeathObserver(LEDServiceManager& mgr) : mLEDServiceManager(mgr) { }
+            };
+    
+            mDeathObserver = new DeathObserver(*const_cast<LEDServiceManager *>(this));
+            mLEDService->asBinder(mLEDService)->linkToDeath(mDeathObserver);
+        }
+    
+        return NO_ERROR;
+    }
+    
+    bool LEDServiceManager::checkService() const 
+    {
+        return isDied? true:false;
+    }
+    
+    void LEDServiceManager::resetServiceStatus() 
+    {
+        isDied = false; 
+    }
+    
+    int LEDServiceManager::initHardware(void)
+    {
+        return mLEDService->initHardware(); 
+    }
+    
+    void LEDServiceManager::releaseHardware(void)
+    {
+        mLEDService->releaseHardware();
+    }
+
+    int LEDServiceManager::on()
+    {
+        return mLEDService->on();
+    }
+    
+    int LEDServiceManager::off()
+    {
+        return mLEDService->off();
+    }
+
+} // namespace android
+
+```
+* main_LED_service.cpp
+```cpp
+#include <binder/BinderService.h>
+#include <LEDService.h>
+#include <binder/IPCThreadState.h>
+#include <binder/ProcessState.h>
+#include <binder/IServiceManager.h>
+
+#include "ILEDService.h"
+
+using namespace android;
+
+int main(int argc, char** argv) {
+#if 1
+    LEDService::publishAndJoinThreadPool(true);
+    // Like the SurfaceFlinger, limit the number of binder threads to 4.
+    ProcessState::self()->setThreadPoolMaxThreadCount(4);
+#else
+    
+    sp<ProcessState> proc(ProcessState::self());
+
+    sp<IServiceManager> sm = defaultServiceManager();
+
+    sm->addService(String16("LEDService"), new LEDService());
+
+    ProcessState::self()->startThreadPool();
+    ProcessState::self()->giveThreadPoolName();
+    IPCThreadState::self()->joinThreadPool();
+    ProcessState::self()->setThreadPoolMaxThreadCount(4);
+#endif
+    return 0;
+}
+```
+
 ## 客户端服务端测试程序
 
 ## JNI接口
