@@ -656,5 +656,141 @@ int main(int argc, char** argv) {
 ## 客户端服务端测试程序
 
 ## JNI接口
+```com_vectoros_led_manager_jni.cpp
+#include <jni.h>
+#include <cstdio>
+#include <map>
+#include <stdlib.h>
+#include <string.h>
+
+#include "LEDServiceManager.h"
+
+#ifdef __ANDROID__
+#define LOG_TAG "LEDServiceManagerJNI"
+#if ANDROID_API_LEVEL >= 26
+#include <log/log.h>
+#else
+#include <cutils/log.h>
+#endif
+#endif
+
+#define JNIREG_CLASS "com/vectoros/led/LEDServiceManager"
+
+namespace android
+{
+static jint nativeOn(JNIEnv *env, jclass jcls)
+{
+    int err;
+    if (ledmgr)
+    {
+        err = ledmgr->assertState();
+        if (err == NO_ERROR)
+        {
+            return ledmgr->on();
+        }
+        else
+        {
+            return err;
+        }
+    }
+    else
+    {
+        ALOGE("ledmgr is not init!\n");
+        return NO_INIT;
+    }
+}
+
+static jint nativeOff(JNIEnv *env, jclass jcls)
+{
+    int err;
+    if (ledmgr)
+    {
+        err = ledmgr->assertState();
+        if (err == NO_ERROR)
+        {
+            return ledmgr->off();
+        }
+        else
+        {
+            return err;
+        }
+    }
+    else
+    {
+        ALOGE("ledmgr is not init!\n");
+        return NO_INIT;
+    }
+}
+
+static JNINativeMethod nativeMethods[] = {
+    {"nativeOn", "()I", (jint *)nativeOn},
+    {"nativeOff", "()I", (jint *)nativeOff},
+};
+
+int register_dten_LEDService(JNIEnv *env)
+{
+    jclass clazz = env->FindClass(JNIREG_CLASS);
+    if (clazz == NULL)
+    {
+        ALOGE("Native registeration unable to find class '%s'", JNIREG_CLASS);
+        return JNI_FALSE;
+    }
+
+    if (env->RegisterNatives(clazz, nativeMethods, sizeof(nativeMethods) / sizeof(nativeMethods[0])) < 0)
+    {
+        env->DeleteLocalRef(clazz);
+        ALOGE("RegisterNatives failed for '%s'", JNIREG_CLASS);
+        return JNI_FALSE;
+    }
+    return JNI_TRUE;
+}
+
+} // namespace android
+
+using namespace android;
+
+extern "C" JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved)
+{
+    JNIEnv *env = NULL;
+    if (vm->GetEnv((void **)&env, JNI_VERSION_1_6) != JNI_OK)
+    {
+        return JNI_ERR;
+    }
+
+    ALOG_ASSERT(env, "Could not retrieve the env!");
+
+    if (JNI_TRUE != register_dten_LEDService(env))
+    {
+        return JNI_ERR;
+    }
+
+    return JNI_VERSION_1_6;
+}
+
+```
 
 ## Java接口
+* LEDServiceManager.java
+```java
+package com.vectoros.led;
+
+/**
+ * 
+ */
+public class LEDServiceManager{
+    private static final String TAG = "LEDServiceManager";
+    static{
+        System.loadLibrary("LEDServiceManager_jni");
+    }
+
+    public static int on(){
+        return nativeOn();
+    }
+    public static int off(){
+        return nativeOff();
+    }
+
+    private static native int nativeOn();
+    private static native int nativeOff();
+}
+```
