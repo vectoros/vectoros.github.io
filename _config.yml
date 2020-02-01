@@ -92,7 +92,7 @@ sitemap:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: next7
+theme: next-master
 
 # Hexo-neat compress
 neat_enable: true
