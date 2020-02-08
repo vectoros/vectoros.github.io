@@ -140,4 +140,37 @@ lunch 45 # aosp_sailfish-userdebug
 make 
 ```
 
+# 编译错误处理
+* `dex2oatd F dex2oat did not finish after 2850 seconds`
+
+  修改`build/core/`目录下的两个文件
+  ```diff
+  diff --git a/core/dex_preopt_libart.mk b/core/  dex_preopt_libart.mk
+  index 9c4d55de7..3b1158d9c 100644
+  --- a/core/dex_preopt_libart.mk
+  +++ b/core/dex_preopt_libart.mk
+  @@ -184,7 +184,7 @@ source build/make/core/ verify_uses_libraries.sh "$(1)" && \
+   source build/make/core/construct_context.sh "$ (PRIVATE_CONDITIONAL_USES_LIBRARIES_HOST)" "$  (PRIVATE_CONDITIONAL_USES_LIBRARIES_TARGET)" && \
+   ,) \
+   ANDROID_LOG_TAGS="*:e" $(DEX2OAT) \
+  -       --runtime-arg -Xms$(DEX2OAT_XMS) --runtime-arg  -Xmx$(DEX2OAT_XMX) \
+  +       --runtime-arg -Xms$(DEX2OAT_XMS) -j1  --runtime-arg -Xmx$(DEX2OAT_XMX) \
+          $${class_loader_context_arg} \
+          $${stored_class_loader_context_arg} \
+          --boot-image=$  (PRIVATE_DEX_PREOPT_IMAGE_LOCATION) \
+  diff --git a/core/dex_preopt_libart_boot.mk b/core/ dex_preopt_libart_boot.mk
+  index a5e7e881a..fadd6d794 100644
+  --- a/core/dex_preopt_libart_boot.mk
+  +++ b/core/dex_preopt_libart_boot.mk
+  @@ -102,7 +102,7 @@ $($(my_2nd_arch_prefix) DEFAULT_DEX_PREOPT_BUILT_IMAGE_FILENAME) : $(LIBART_TARGE
+          @rm -f $(dir $($(PRIVATE_2ND_ARCH_VAR_PREFIX) LIBART_TARGET_BOOT_OAT_UNSTRIPPED))/*.art
+          @rm -f $(dir $($(PRIVATE_2ND_ARCH_VAR_PREFIX) LIBART_TARGET_BOOT_OAT_UNSTRIPPED))/*.oat
+          @rm -f $(dir $($(PRIVATE_2ND_ARCH_VAR_PREFIX) LIBART_TARGET_BOOT_OAT_UNSTRIPPED))/*.art.rel
+  -       $(hide) $(DEX2OAT_BOOT_IMAGE_LOG_TAGS) $  (DEX2OAT) --runtime-arg -Xms$(DEX2OAT_IMAGE_XMS) \
+  +       $(hide) $(DEX2OAT_BOOT_IMAGE_LOG_TAGS) $  (DEX2OAT) -j1 --runtime-arg -Xms$(DEX2OAT_IMAGE_XMS) \
+                  --runtime-arg -Xmx$(DEX2OAT_IMAGE_XMX) \
+                  $(PRIVATE_BOOT_IMAGE_FLAGS) \
+                  $(addprefix --dex-file=,$ (LIBART_TARGET_BOOT_DEX_FILES)) \
+  ```
+
 
