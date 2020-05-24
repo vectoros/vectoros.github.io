@@ -727,7 +727,7 @@ static JNINativeMethod nativeMethods[] = {
     {"nativeOff", "()I", (jint *)nativeOff},
 };
 
-int register_dten_LEDService(JNIEnv *env)
+int register_vectoros_LEDService(JNIEnv *env)
 {
     jclass clazz = env->FindClass(JNIREG_CLASS);
     if (clazz == NULL)
@@ -759,7 +759,7 @@ extern "C" JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved)
 
     ALOG_ASSERT(env, "Could not retrieve the env!");
 
-    if (JNI_TRUE != register_dten_LEDService(env))
+    if (JNI_TRUE != register_vectoros_LEDService(env))
     {
         return JNI_ERR;
     }
