@@ -2,9 +2,18 @@
 title: Android Camera 深度解析
 abbrlink: 31ae23dc
 date: 2022-01-02 22:14:59
-tags:
+tags: 
+- Android
+- Camera
+- Camera2
+- CameraService
 categories:
+- Android
+- Framework
+- Camera
 ---
+
+
 
 这是一个系列的文章，主要从HAL层，Framework层，应用层三个方面来刨析Android Camera框架的实现原理和设计理念。源码以AOSP android 11版本为例。主要参考Android官网的文档。
 
